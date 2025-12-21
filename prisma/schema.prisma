@@ -9,9 +9,9 @@ datasource db {
 }
 
 model User {
-  id            Int       @id @default(autoincrement())
-  email         String    @unique
-  name          String?
+  id            String    @id
+  name          String
+  email         String
   emailVerified Boolean   @default(false)
   image         String?
   createdAt     DateTime  @default(now())
@@ -19,6 +19,7 @@ model User {
   sessions      Session[]
   accounts      Account[]
 
+  @@unique([email])
   @@map("user")
 }
 
