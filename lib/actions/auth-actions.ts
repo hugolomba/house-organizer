@@ -21,7 +21,7 @@ export const signIn = async (email: string, password: string) => {
     body: {
       email,
       password,
-      callbackURL: "/",
+      callbackURL: "/setup-house",
     },
   });
 
@@ -40,7 +40,7 @@ export const signInSocial = async (provider: "google" | "github") => {
   const { url } = await auth.api.signInSocial({
     body: {
       provider,
-      callbackURL: "/jahjkshajkshajkh",
+      callbackURL: "/setup-house",
     },
   });
 

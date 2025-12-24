@@ -37,6 +37,8 @@ export type HouseSumAggregateOutputType = {
 export type HouseMinAggregateOutputType = {
   id: number | null
   name: string | null
+  address: string | null
+  imageUrl: string | null
   createdById: string | null
   inviteCode: string | null
 }
@@ -44,6 +46,8 @@ export type HouseMinAggregateOutputType = {
 export type HouseMaxAggregateOutputType = {
   id: number | null
   name: string | null
+  address: string | null
+  imageUrl: string | null
   createdById: string | null
   inviteCode: string | null
 }
@@ -51,6 +55,8 @@ export type HouseMaxAggregateOutputType = {
 export type HouseCountAggregateOutputType = {
   id: number
   name: number
+  address: number
+  imageUrl: number
   createdById: number
   inviteCode: number
   _all: number
@@ -68,6 +74,8 @@ export type HouseSumAggregateInputType = {
 export type HouseMinAggregateInputType = {
   id?: true
   name?: true
+  address?: true
+  imageUrl?: true
   createdById?: true
   inviteCode?: true
 }
@@ -75,6 +83,8 @@ export type HouseMinAggregateInputType = {
 export type HouseMaxAggregateInputType = {
   id?: true
   name?: true
+  address?: true
+  imageUrl?: true
   createdById?: true
   inviteCode?: true
 }
@@ -82,6 +92,8 @@ export type HouseMaxAggregateInputType = {
 export type HouseCountAggregateInputType = {
   id?: true
   name?: true
+  address?: true
+  imageUrl?: true
   createdById?: true
   inviteCode?: true
   _all?: true
@@ -176,6 +188,8 @@ export type HouseGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
 export type HouseGroupByOutputType = {
   id: number
   name: string
+  address: string | null
+  imageUrl: string | null
   createdById: string
   inviteCode: string
   _count: HouseCountAggregateOutputType | null
@@ -206,6 +220,8 @@ export type HouseWhereInput = {
   NOT?: Prisma.HouseWhereInput | Prisma.HouseWhereInput[]
   id?: Prisma.IntFilter<"House"> | number
   name?: Prisma.StringFilter<"House"> | string
+  address?: Prisma.StringNullableFilter<"House"> | string | null
+  imageUrl?: Prisma.StringNullableFilter<"House"> | string | null
   createdById?: Prisma.StringFilter<"House"> | string
   inviteCode?: Prisma.StringFilter<"House"> | string
   alerts?: Prisma.AlertListRelationFilter
@@ -219,6 +235,8 @@ export type HouseWhereInput = {
 export type HouseOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  address?: Prisma.SortOrderInput | Prisma.SortOrder
+  imageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   createdById?: Prisma.SortOrder
   inviteCode?: Prisma.SortOrder
   alerts?: Prisma.AlertOrderByRelationAggregateInput
@@ -236,6 +254,8 @@ export type HouseWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.HouseWhereInput[]
   NOT?: Prisma.HouseWhereInput | Prisma.HouseWhereInput[]
   name?: Prisma.StringFilter<"House"> | string
+  address?: Prisma.StringNullableFilter<"House"> | string | null
+  imageUrl?: Prisma.StringNullableFilter<"House"> | string | null
   createdById?: Prisma.StringFilter<"House"> | string
   alerts?: Prisma.AlertListRelationFilter
   bills?: Prisma.BillListRelationFilter
@@ -248,6 +268,8 @@ export type HouseWhereUniqueInput = Prisma.AtLeast<{
 export type HouseOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  address?: Prisma.SortOrderInput | Prisma.SortOrder
+  imageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   createdById?: Prisma.SortOrder
   inviteCode?: Prisma.SortOrder
   _count?: Prisma.HouseCountOrderByAggregateInput
@@ -263,12 +285,16 @@ export type HouseScalarWhereWithAggregatesInput = {
   NOT?: Prisma.HouseScalarWhereWithAggregatesInput | Prisma.HouseScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"House"> | number
   name?: Prisma.StringWithAggregatesFilter<"House"> | string
+  address?: Prisma.StringNullableWithAggregatesFilter<"House"> | string | null
+  imageUrl?: Prisma.StringNullableWithAggregatesFilter<"House"> | string | null
   createdById?: Prisma.StringWithAggregatesFilter<"House"> | string
   inviteCode?: Prisma.StringWithAggregatesFilter<"House"> | string
 }
 
 export type HouseCreateInput = {
   name: string
+  address?: string | null
+  imageUrl?: string | null
   inviteCode?: string
   alerts?: Prisma.AlertCreateNestedManyWithoutHouseInput
   bills?: Prisma.BillCreateNestedManyWithoutHouseInput
@@ -281,6 +307,8 @@ export type HouseCreateInput = {
 export type HouseUncheckedCreateInput = {
   id?: number
   name: string
+  address?: string | null
+  imageUrl?: string | null
   createdById: string
   inviteCode?: string
   alerts?: Prisma.AlertUncheckedCreateNestedManyWithoutHouseInput
@@ -292,6 +320,8 @@ export type HouseUncheckedCreateInput = {
 
 export type HouseUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   inviteCode?: Prisma.StringFieldUpdateOperationsInput | string
   alerts?: Prisma.AlertUpdateManyWithoutHouseNestedInput
   bills?: Prisma.BillUpdateManyWithoutHouseNestedInput
@@ -304,6 +334,8 @@ export type HouseUpdateInput = {
 export type HouseUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   inviteCode?: Prisma.StringFieldUpdateOperationsInput | string
   alerts?: Prisma.AlertUncheckedUpdateManyWithoutHouseNestedInput
@@ -316,18 +348,24 @@ export type HouseUncheckedUpdateInput = {
 export type HouseCreateManyInput = {
   id?: number
   name: string
+  address?: string | null
+  imageUrl?: string | null
   createdById: string
   inviteCode?: string
 }
 
 export type HouseUpdateManyMutationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   inviteCode?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type HouseUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   inviteCode?: Prisma.StringFieldUpdateOperationsInput | string
 }
@@ -350,6 +388,8 @@ export type HouseOrderByRelationAggregateInput = {
 export type HouseCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  address?: Prisma.SortOrder
+  imageUrl?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   inviteCode?: Prisma.SortOrder
 }
@@ -361,6 +401,8 @@ export type HouseAvgOrderByAggregateInput = {
 export type HouseMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  address?: Prisma.SortOrder
+  imageUrl?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   inviteCode?: Prisma.SortOrder
 }
@@ -368,6 +410,8 @@ export type HouseMaxOrderByAggregateInput = {
 export type HouseMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  address?: Prisma.SortOrder
+  imageUrl?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   inviteCode?: Prisma.SortOrder
 }
@@ -505,6 +549,8 @@ export type HouseUpdateOneRequiredWithoutAlertsNestedInput = {
 
 export type HouseCreateWithoutCreatedByInput = {
   name: string
+  address?: string | null
+  imageUrl?: string | null
   inviteCode?: string
   alerts?: Prisma.AlertCreateNestedManyWithoutHouseInput
   bills?: Prisma.BillCreateNestedManyWithoutHouseInput
@@ -516,6 +562,8 @@ export type HouseCreateWithoutCreatedByInput = {
 export type HouseUncheckedCreateWithoutCreatedByInput = {
   id?: number
   name: string
+  address?: string | null
+  imageUrl?: string | null
   inviteCode?: string
   alerts?: Prisma.AlertUncheckedCreateNestedManyWithoutHouseInput
   bills?: Prisma.BillUncheckedCreateNestedManyWithoutHouseInput
@@ -536,6 +584,8 @@ export type HouseCreateManyCreatedByInputEnvelope = {
 
 export type HouseCreateWithoutUsersInput = {
   name: string
+  address?: string | null
+  imageUrl?: string | null
   inviteCode?: string
   alerts?: Prisma.AlertCreateNestedManyWithoutHouseInput
   bills?: Prisma.BillCreateNestedManyWithoutHouseInput
@@ -547,6 +597,8 @@ export type HouseCreateWithoutUsersInput = {
 export type HouseUncheckedCreateWithoutUsersInput = {
   id?: number
   name: string
+  address?: string | null
+  imageUrl?: string | null
   createdById: string
   inviteCode?: string
   alerts?: Prisma.AlertUncheckedCreateNestedManyWithoutHouseInput
@@ -582,6 +634,8 @@ export type HouseScalarWhereInput = {
   NOT?: Prisma.HouseScalarWhereInput | Prisma.HouseScalarWhereInput[]
   id?: Prisma.IntFilter<"House"> | number
   name?: Prisma.StringFilter<"House"> | string
+  address?: Prisma.StringNullableFilter<"House"> | string | null
+  imageUrl?: Prisma.StringNullableFilter<"House"> | string | null
   createdById?: Prisma.StringFilter<"House"> | string
   inviteCode?: Prisma.StringFilter<"House"> | string
 }
@@ -599,6 +653,8 @@ export type HouseUpdateToOneWithWhereWithoutUsersInput = {
 
 export type HouseUpdateWithoutUsersInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   inviteCode?: Prisma.StringFieldUpdateOperationsInput | string
   alerts?: Prisma.AlertUpdateManyWithoutHouseNestedInput
   bills?: Prisma.BillUpdateManyWithoutHouseNestedInput
@@ -610,6 +666,8 @@ export type HouseUpdateWithoutUsersInput = {
 export type HouseUncheckedUpdateWithoutUsersInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   inviteCode?: Prisma.StringFieldUpdateOperationsInput | string
   alerts?: Prisma.AlertUncheckedUpdateManyWithoutHouseNestedInput
@@ -620,6 +678,8 @@ export type HouseUncheckedUpdateWithoutUsersInput = {
 
 export type HouseCreateWithoutRoomsInput = {
   name: string
+  address?: string | null
+  imageUrl?: string | null
   inviteCode?: string
   alerts?: Prisma.AlertCreateNestedManyWithoutHouseInput
   bills?: Prisma.BillCreateNestedManyWithoutHouseInput
@@ -631,6 +691,8 @@ export type HouseCreateWithoutRoomsInput = {
 export type HouseUncheckedCreateWithoutRoomsInput = {
   id?: number
   name: string
+  address?: string | null
+  imageUrl?: string | null
   createdById: string
   inviteCode?: string
   alerts?: Prisma.AlertUncheckedCreateNestedManyWithoutHouseInput
@@ -657,6 +719,8 @@ export type HouseUpdateToOneWithWhereWithoutRoomsInput = {
 
 export type HouseUpdateWithoutRoomsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   inviteCode?: Prisma.StringFieldUpdateOperationsInput | string
   alerts?: Prisma.AlertUpdateManyWithoutHouseNestedInput
   bills?: Prisma.BillUpdateManyWithoutHouseNestedInput
@@ -668,6 +732,8 @@ export type HouseUpdateWithoutRoomsInput = {
 export type HouseUncheckedUpdateWithoutRoomsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   inviteCode?: Prisma.StringFieldUpdateOperationsInput | string
   alerts?: Prisma.AlertUncheckedUpdateManyWithoutHouseNestedInput
@@ -678,6 +744,8 @@ export type HouseUncheckedUpdateWithoutRoomsInput = {
 
 export type HouseCreateWithoutBillsInput = {
   name: string
+  address?: string | null
+  imageUrl?: string | null
   inviteCode?: string
   alerts?: Prisma.AlertCreateNestedManyWithoutHouseInput
   createdBy: Prisma.UserCreateNestedOneWithoutHousesCreatedInput
@@ -689,6 +757,8 @@ export type HouseCreateWithoutBillsInput = {
 export type HouseUncheckedCreateWithoutBillsInput = {
   id?: number
   name: string
+  address?: string | null
+  imageUrl?: string | null
   createdById: string
   inviteCode?: string
   alerts?: Prisma.AlertUncheckedCreateNestedManyWithoutHouseInput
@@ -715,6 +785,8 @@ export type HouseUpdateToOneWithWhereWithoutBillsInput = {
 
 export type HouseUpdateWithoutBillsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   inviteCode?: Prisma.StringFieldUpdateOperationsInput | string
   alerts?: Prisma.AlertUpdateManyWithoutHouseNestedInput
   createdBy?: Prisma.UserUpdateOneRequiredWithoutHousesCreatedNestedInput
@@ -726,6 +798,8 @@ export type HouseUpdateWithoutBillsInput = {
 export type HouseUncheckedUpdateWithoutBillsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   inviteCode?: Prisma.StringFieldUpdateOperationsInput | string
   alerts?: Prisma.AlertUncheckedUpdateManyWithoutHouseNestedInput
@@ -736,6 +810,8 @@ export type HouseUncheckedUpdateWithoutBillsInput = {
 
 export type HouseCreateWithoutInfosInput = {
   name: string
+  address?: string | null
+  imageUrl?: string | null
   inviteCode?: string
   alerts?: Prisma.AlertCreateNestedManyWithoutHouseInput
   bills?: Prisma.BillCreateNestedManyWithoutHouseInput
@@ -747,6 +823,8 @@ export type HouseCreateWithoutInfosInput = {
 export type HouseUncheckedCreateWithoutInfosInput = {
   id?: number
   name: string
+  address?: string | null
+  imageUrl?: string | null
   createdById: string
   inviteCode?: string
   alerts?: Prisma.AlertUncheckedCreateNestedManyWithoutHouseInput
@@ -773,6 +851,8 @@ export type HouseUpdateToOneWithWhereWithoutInfosInput = {
 
 export type HouseUpdateWithoutInfosInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   inviteCode?: Prisma.StringFieldUpdateOperationsInput | string
   alerts?: Prisma.AlertUpdateManyWithoutHouseNestedInput
   bills?: Prisma.BillUpdateManyWithoutHouseNestedInput
@@ -784,6 +864,8 @@ export type HouseUpdateWithoutInfosInput = {
 export type HouseUncheckedUpdateWithoutInfosInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   inviteCode?: Prisma.StringFieldUpdateOperationsInput | string
   alerts?: Prisma.AlertUncheckedUpdateManyWithoutHouseNestedInput
@@ -794,6 +876,8 @@ export type HouseUncheckedUpdateWithoutInfosInput = {
 
 export type HouseCreateWithoutAlertsInput = {
   name: string
+  address?: string | null
+  imageUrl?: string | null
   inviteCode?: string
   bills?: Prisma.BillCreateNestedManyWithoutHouseInput
   createdBy: Prisma.UserCreateNestedOneWithoutHousesCreatedInput
@@ -805,6 +889,8 @@ export type HouseCreateWithoutAlertsInput = {
 export type HouseUncheckedCreateWithoutAlertsInput = {
   id?: number
   name: string
+  address?: string | null
+  imageUrl?: string | null
   createdById: string
   inviteCode?: string
   bills?: Prisma.BillUncheckedCreateNestedManyWithoutHouseInput
@@ -831,6 +917,8 @@ export type HouseUpdateToOneWithWhereWithoutAlertsInput = {
 
 export type HouseUpdateWithoutAlertsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   inviteCode?: Prisma.StringFieldUpdateOperationsInput | string
   bills?: Prisma.BillUpdateManyWithoutHouseNestedInput
   createdBy?: Prisma.UserUpdateOneRequiredWithoutHousesCreatedNestedInput
@@ -842,6 +930,8 @@ export type HouseUpdateWithoutAlertsInput = {
 export type HouseUncheckedUpdateWithoutAlertsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   inviteCode?: Prisma.StringFieldUpdateOperationsInput | string
   bills?: Prisma.BillUncheckedUpdateManyWithoutHouseNestedInput
@@ -853,11 +943,15 @@ export type HouseUncheckedUpdateWithoutAlertsInput = {
 export type HouseCreateManyCreatedByInput = {
   id?: number
   name: string
+  address?: string | null
+  imageUrl?: string | null
   inviteCode?: string
 }
 
 export type HouseUpdateWithoutCreatedByInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   inviteCode?: Prisma.StringFieldUpdateOperationsInput | string
   alerts?: Prisma.AlertUpdateManyWithoutHouseNestedInput
   bills?: Prisma.BillUpdateManyWithoutHouseNestedInput
@@ -869,6 +963,8 @@ export type HouseUpdateWithoutCreatedByInput = {
 export type HouseUncheckedUpdateWithoutCreatedByInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   inviteCode?: Prisma.StringFieldUpdateOperationsInput | string
   alerts?: Prisma.AlertUncheckedUpdateManyWithoutHouseNestedInput
   bills?: Prisma.BillUncheckedUpdateManyWithoutHouseNestedInput
@@ -880,6 +976,8 @@ export type HouseUncheckedUpdateWithoutCreatedByInput = {
 export type HouseUncheckedUpdateManyWithoutCreatedByInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   inviteCode?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
@@ -953,6 +1051,8 @@ export type HouseCountOutputTypeCountUsersArgs<ExtArgs extends runtime.Types.Ext
 export type HouseSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
+  address?: boolean
+  imageUrl?: boolean
   createdById?: boolean
   inviteCode?: boolean
   alerts?: boolean | Prisma.House$alertsArgs<ExtArgs>
@@ -967,6 +1067,8 @@ export type HouseSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
 export type HouseSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
+  address?: boolean
+  imageUrl?: boolean
   createdById?: boolean
   inviteCode?: boolean
   createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -975,6 +1077,8 @@ export type HouseSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
 export type HouseSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
+  address?: boolean
+  imageUrl?: boolean
   createdById?: boolean
   inviteCode?: boolean
   createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -983,11 +1087,13 @@ export type HouseSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
 export type HouseSelectScalar = {
   id?: boolean
   name?: boolean
+  address?: boolean
+  imageUrl?: boolean
   createdById?: boolean
   inviteCode?: boolean
 }
 
-export type HouseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "createdById" | "inviteCode", ExtArgs["result"]["house"]>
+export type HouseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "address" | "imageUrl" | "createdById" | "inviteCode", ExtArgs["result"]["house"]>
 export type HouseInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   alerts?: boolean | Prisma.House$alertsArgs<ExtArgs>
   bills?: boolean | Prisma.House$billsArgs<ExtArgs>
@@ -1017,6 +1123,8 @@ export type $HousePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     name: string
+    address: string | null
+    imageUrl: string | null
     createdById: string
     inviteCode: string
   }, ExtArgs["result"]["house"]>
@@ -1450,6 +1558,8 @@ export interface Prisma__HouseClient<T, Null = never, ExtArgs extends runtime.Ty
 export interface HouseFieldRefs {
   readonly id: Prisma.FieldRef<"House", 'Int'>
   readonly name: Prisma.FieldRef<"House", 'String'>
+  readonly address: Prisma.FieldRef<"House", 'String'>
+  readonly imageUrl: Prisma.FieldRef<"House", 'String'>
   readonly createdById: Prisma.FieldRef<"House", 'String'>
   readonly inviteCode: Prisma.FieldRef<"House", 'String'>
 }
