@@ -49,3 +49,45 @@ export async function createHouse({
 
   return newHouse;
 }
+
+// Get house by invite code
+export async function getHouseByInviteCode(inviteCode: string) {
+  const house = await prisma.house.findUnique({
+    where: { inviteCode },
+    include: {
+      users: true,
+    },
+  });
+
+  return house;
+}
+
+// join house
+export async function joinHouseByInviteCode(inviteCode: string) {
+  // get user session
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  if (session == null) {
+    return;
+  }
+
+  const house = await prisma.house.findUnique({
+    where: { inviteCode },
+  });
+
+  if (!house) {
+    throw new Error("House not found");
+  }
+
+  // add user to house
+  const updatedUser = await prisma.user.update({
+    where: { id: session.user.id },
+    data: {
+      houseId: house.id,
+    },
+  });
+
+  return updatedUser;
+}
