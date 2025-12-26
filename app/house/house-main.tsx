@@ -17,6 +17,8 @@ import {
   TableHeader,
   TableRow,
   Alert,
+  addToast,
+  closeToast,
 } from "@heroui/react";
 import { Payload } from "@prisma/client/runtime/client";
 import HouseInfoTable from "./house-info-table";
@@ -27,14 +29,19 @@ import {
   MoonIcon,
   ReceiptEuro,
   TriangleAlert,
+  Undo2,
 } from "lucide-react";
-import { markAlertAsResolved } from "@/lib/actions/alerts-actions";
+import {
+  markAlertAsResolved,
+  undoResolvedAlert,
+} from "@/lib/actions/alerts-actions";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { set } from "better-auth";
 
 export default function HouseMain({ house }: Payload<House>) {
   const router = useRouter();
+
   const [isResolving, setIsResolving] = useState<boolean>(false);
   const [isResolved, setIsResolved] = useState<boolean>(false);
   const [resolvingAlertId, setResolvingAlertId] = useState<string | null>(null);
@@ -78,7 +85,7 @@ export default function HouseMain({ house }: Payload<House>) {
     }
   };
 
-  const handleResolveAlert = async (alertId: string) => {
+  const handleResolveAlert = async (alertId: string, alertTitle: string) => {
     setResolvingAlertId(alertId);
 
     try {
@@ -93,9 +100,32 @@ export default function HouseMain({ house }: Payload<House>) {
       console.error("Failed to resolve alert:", error);
     } finally {
       setResolvingAlertId(null);
-      setTimeout(() => {
-        router.refresh();
-      }, 200);
+      //   setTimeout(() => {
+      router.refresh();
+      //   }, 200);
+      const key = addToast({
+        title: "Alert resolved",
+        description: `${alertTitle} has been marked as resolved.`,
+        color: "success",
+        shouldShowTimeoutProgress: true,
+        endContent: (
+          <Button
+            onPress={() => {
+              undoResolvedAlert(alertId);
+              setResolvedAlertIds((prev) => {
+                const next = new Set(prev);
+                next.delete(alertId);
+                return next;
+              });
+              router.refresh();
+              closeToast(key!);
+            }}
+            variant="flat"
+          >
+            Undo <Undo2 />
+          </Button>
+        ),
+      });
     }
   };
 
@@ -169,7 +199,9 @@ export default function HouseMain({ house }: Payload<House>) {
                           size="sm"
                           variant="flat"
                           disabled={resolvedAlertIds.has(alert.id)}
-                          onPress={() => handleResolveAlert(alert.id)}
+                          onPress={() =>
+                            handleResolveAlert(alert.id, alert.title)
+                          }
                         >
                           {resolvedAlertIds.has(alert.id)
                             ? "Resolved"

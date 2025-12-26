@@ -11,4 +11,13 @@ export async function markAlertAsResolved(alertId: string) {
   });
 }
 
+// undo resolved alert
+export async function undoResolvedAlert(alertId: string) {
+  // update alert in db
+  await prisma.alert.update({
+    where: { id: alertId },
+    data: { isResolved: false },
+  });
+}
+
 // get house by house id
