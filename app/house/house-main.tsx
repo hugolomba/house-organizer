@@ -28,20 +28,34 @@ import {
   ReceiptEuro,
   TriangleAlert,
 } from "lucide-react";
+import { markAlertAsResolved } from "@/lib/actions/alerts-actions";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { set } from "better-auth";
 
 export default function HouseMain({ house }: Payload<House>) {
-  console.log(house.alerts);
+  const router = useRouter();
+  const [isResolving, setIsResolving] = useState<boolean>(false);
+  const [isResolved, setIsResolved] = useState<boolean>(false);
+  const [resolvingAlertId, setResolvingAlertId] = useState<string | null>(null);
+  const [resolvedAlertIds, setResolvedAlertIds] = useState<Set<string>>(
+    new Set()
+  );
 
-  const defineAlertColor = (alertPriority: string) => {
-    switch (alertPriority) {
+  const activeAlerts = house.alerts.filter(
+    (alert) => !alert.isResolved && !resolvedAlertIds.has(alert.id)
+  );
+
+  const defineAlertColor = (alertId: string, priority: string) => {
+    if (resolvedAlertIds.has(alertId)) return "success";
+
+    switch (priority) {
       case "URGENT":
       case "HIGH":
         return "danger";
-
       case "MEDIUM":
       case "LOW":
         return "warning";
-
       default:
         return "primary";
     }
@@ -61,6 +75,27 @@ export default function HouseMain({ house }: Payload<House>) {
 
       default:
         return undefined;
+    }
+  };
+
+  const handleResolveAlert = async (alertId: string) => {
+    setResolvingAlertId(alertId);
+
+    try {
+      await markAlertAsResolved(alertId);
+
+      setResolvedAlertIds((prev) => {
+        const next = new Set(prev);
+        next.add(alertId);
+        return next;
+      });
+    } catch (error) {
+      console.error("Failed to resolve alert:", error);
+    } finally {
+      setResolvingAlertId(null);
+      setTimeout(() => {
+        router.refresh();
+      }, 200);
     }
   };
 
@@ -104,33 +139,47 @@ export default function HouseMain({ house }: Payload<House>) {
             aria-label="Alerts"
             title={
               <p className="text-foreground/90 font-bold">
-                Alerts ({house.alerts.length})
+                Alerts ({activeAlerts.length})
               </p>
             }
             indicator={<TriangleAlert color="#ff0000" />}
             // className="bg-red-600/20"
           >
             <div className="flex flex-col gap-2">
-              {house.alerts.map((alert) => (
-                <Alert
-                  description={alert.description}
-                  title={alert.title}
-                  key={alert.id}
-                  color={defineAlertColor(alert.priority)}
-                  variant={defineAlertVariant(alert.priority)}
-                  endContent={
-                    <Button
-                      size="sm"
-                      //   variant={defineAlertVariant(alert.priority)}
-                      variant="flat"
-                      color="default"
-                      //   color={defineAlertColor(alert.priority)}
-                    >
-                      Mark as Solved
-                    </Button>
-                  }
-                />
-              ))}
+              {house.alerts.map((alert) =>
+                alert.isResolved ? null : (
+                  <Alert
+                    description={alert.description}
+                    title={alert.title}
+                    key={alert.id}
+                    color={defineAlertColor(alert.id, alert.priority)}
+                    variant={defineAlertVariant(alert.priority)}
+                    endContent={
+                      resolvingAlertId === alert.id ? (
+                        <Button
+                          className="w-24"
+                          isLoading
+                          size="sm"
+                          variant="flat"
+                        >
+                          Resolving...
+                        </Button>
+                      ) : (
+                        <Button
+                          size="sm"
+                          variant="flat"
+                          disabled={resolvedAlertIds.has(alert.id)}
+                          onPress={() => handleResolveAlert(alert.id)}
+                        >
+                          {resolvedAlertIds.has(alert.id)
+                            ? "Resolved"
+                            : "Mark as resolved"}
+                        </Button>
+                      )
+                    }
+                  />
+                )
+              )}
             </div>
 
             {/* <HouseInfoTable infos={house.infos} /> */}
