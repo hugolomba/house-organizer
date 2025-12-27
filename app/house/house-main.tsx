@@ -1,6 +1,4 @@
 "use client";
-
-import { House } from "@/prisma/generated/client";
 import {
   Accordion,
   AccordionItem,
@@ -20,14 +18,17 @@ import {
 } from "lucide-react";
 import Alerts from "./(main-info-components)/alerts";
 import { getHouseById } from "@/lib/actions/house-actions";
+import Bills from "./(main-info-components)/bills";
 
 type HouseProps = {
   house: NonNullable<Awaited<ReturnType<typeof getHouseById>>>;
 };
 
 export default function HouseMain({ house }: HouseProps) {
+  const activeAlerts = house.alerts.filter((alert) => !alert.isResolved);
+
   return (
-    <Card fullWidth>
+    <Card fullWidth shadow="md" className="rounded-t-none rounded-b-xl pb-2">
       <CardBody className="flex flex-col items-center justify-center">
         <HouseIcon />
         <h1 className="text-2xl font-bold">{house.name}</h1>
@@ -64,7 +65,11 @@ export default function HouseMain({ house }: HouseProps) {
           <AccordionItem
             key="1"
             aria-label="Alerts"
-            title={<p className="text-foreground/90 font-bold">Alerts</p>}
+            title={
+              <p className="text-foreground/90 font-bold">
+                Alerts {activeAlerts.length}
+              </p>
+            }
             indicator={<TriangleAlert color="#ff0000" />}
           >
             <Alerts houseAlerts={house.alerts} />
@@ -74,7 +79,9 @@ export default function HouseMain({ house }: HouseProps) {
             aria-label="Upcoming bills"
             title="Upcoming bills"
             indicator={<ReceiptEuro />}
-          ></AccordionItem>
+          >
+            <Bills houseBills={house.bills} />
+          </AccordionItem>
 
           <AccordionItem
             key="3"

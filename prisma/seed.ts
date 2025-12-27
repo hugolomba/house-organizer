@@ -138,6 +138,60 @@ async function main() {
     },
   });
 
+  await prisma.bill.create({
+    data: {
+      title: "Internet",
+      description: "Bill for the month of December",
+      totalValue: 20,
+      dueDate: new Date("2025-12-26"),
+
+      houseId: house.id,
+      responsibleId: user1.id,
+
+      shares: {
+        create: [
+          {
+            userId: user1.id,
+            value: 10,
+            paid: true,
+          },
+          {
+            userId: user2.id,
+            value: 10,
+            paid: false,
+          },
+        ],
+      },
+    },
+  });
+
+  await prisma.bill.create({
+    data: {
+      title: "Electricity Bill",
+      description: "Bill for the month of December",
+      totalValue: 300,
+      dueDate: new Date("2025-12-28"),
+
+      houseId: house.id,
+      responsibleId: user1.id,
+
+      shares: {
+        create: [
+          {
+            userId: user1.id,
+            value: 150,
+            paid: true,
+          },
+          {
+            userId: user2.id,
+            value: 150,
+            paid: false,
+          },
+        ],
+      },
+    },
+  });
+
   // 🚨 Alert
   await prisma.alert.createMany({
     data: [

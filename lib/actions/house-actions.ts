@@ -137,7 +137,17 @@ export async function getHouseById(houseId: number) {
     where: { id: houseId },
     include: {
       users: true,
-      bills: true,
+      bills: {
+        include: {
+          shares: {
+            include: {
+              user: true,
+            },
+          },
+          responsible: true,
+        },
+        orderBy: { dueDate: "asc" },
+      },
       infos: true,
       alerts: true,
       credentials: true,

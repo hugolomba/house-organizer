@@ -24,10 +24,6 @@ export default function Alerts({ houseAlerts }: { houseAlerts: HouseAlerts }) {
     new Set()
   );
 
-  const activeAlerts = houseAlerts.filter(
-    (alert) => !alert.isResolved && !resolvedAlertIds.has(alert.id)
-  );
-
   const defineAlertColor = (alertId: string, priority: string) => {
     if (resolvedAlertIds.has(alertId)) return "success";
 

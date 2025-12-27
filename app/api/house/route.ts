@@ -9,7 +9,16 @@ export async function GET() {
     },
     include: {
       alerts: true,
-      bills: true,
+      bills: {
+        include: {
+          shares: {
+            include: {
+              user: true,
+            },
+          },
+          responsible: true,
+        },
+      },
       createdBy: true,
       infos: true,
       rooms: true,

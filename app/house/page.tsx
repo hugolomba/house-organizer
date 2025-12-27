@@ -30,7 +30,7 @@ export default async function Home() {
   }
 
   return (
-    <div className="container flex flex-col items-center p-6 mx-auto">
+    <div className="container flex flex-col items-center mx-auto">
       <HouseMain house={house} />
     </div>
   );
