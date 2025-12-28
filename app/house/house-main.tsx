@@ -11,6 +11,9 @@ import {
   ButtonGroup,
   CardHeader,
   Divider,
+  Modal,
+  ModalContent,
+  ModalHeader,
 } from "@heroui/react";
 
 import {
@@ -20,17 +23,23 @@ import {
   House as HouseIcon,
   Lock,
   ReceiptEuro,
+  SquarePlus,
   TriangleAlert,
 } from "lucide-react";
 import Alerts from "./(main-info-components)/alerts";
 import { getHouseById } from "@/lib/actions/house-actions";
 import Bills from "./(main-info-components)/bills";
+import { useState } from "react";
+import Credentials from "./(main-info-components)/credentials";
 
 type HouseProps = {
   house: NonNullable<Awaited<ReturnType<typeof getHouseById>>>;
 };
 
 export default function HouseMain({ house }: HouseProps) {
+  const [credentialsOpen, setCredentialsOpen] = useState(false);
+  console.log("Credentials modal open:", credentialsOpen);
+
   const activeAlerts = house.alerts.filter((alert) => !alert.isResolved);
 
   function timeAgoShort(date: Date) {
@@ -89,7 +98,14 @@ export default function HouseMain({ house }: HouseProps) {
           <Button size="sm" variant="flat">
             Invite
           </Button>
-          <Button startContent={<Lock size={15} />} size="sm" variant="flat">
+          <Button
+            startContent={<Lock size={15} />}
+            size="sm"
+            variant="flat"
+            onPress={() => {
+              setCredentialsOpen(true);
+            }}
+          >
             Passwords
           </Button>
           <Button size="sm" variant="flat">
@@ -142,6 +158,10 @@ export default function HouseMain({ house }: HouseProps) {
       </Card>
 
       <Card>
+        <CardHeader className="flex flex-row items-center gap-2">
+          <SquarePlus /> <h2 className="font-bold">Quick Actions</h2>
+        </CardHeader>
+        <Divider orientation="horizontal" />
         <CardBody className="flex flex-row gap-2">
           <Button
             variant="flat"
@@ -164,7 +184,7 @@ export default function HouseMain({ house }: HouseProps) {
         </CardBody>
       </Card>
 
-      <Card>
+      {/* <Card>
         <CardHeader className="flex flex-row items-center gap-2">
           <Clock /> <h2 className="font-bold">Recent activity</h2>
         </CardHeader>
@@ -199,7 +219,75 @@ export default function HouseMain({ house }: HouseProps) {
             </Accordion>
           )}
         </CardBody>
+      </Card> */}
+
+      <Card>
+        {/* <CardHeader className="flex flex-row items-center gap-2">
+          <Clock />
+        </CardHeader> */}
+        {/* <Divider orientation="horizontal" /> */}
+
+        <CardBody>
+          <Accordion fullWidth disableIndicatorAnimation isCompact>
+            <AccordionItem
+              title={<h2 className="font-bold">Recent activity</h2>}
+              indicator={<Clock />}
+            >
+              {house.activities.length === 0 ? (
+                <p className="text-center text-muted-foreground">
+                  No recent activity
+                </p>
+              ) : (
+                <Accordion
+                  fullWidth
+                  disableIndicatorAnimation
+                  isCompact
+                  variant="light"
+                  itemClasses={{
+                    titleWrapper: "flex flex-row justify-between",
+                  }}
+                >
+                  {house.activities.map((activity) => (
+                    <AccordionItem
+                      key={activity.id}
+                      aria-label={activity.message}
+                      title={activity.title}
+                      subtitle={timeAgoShort(new Date(activity.createdAt))}
+                      hideIndicator
+                    >
+                      <p className="text-foreground/90">{activity.message}</p>
+                    </AccordionItem>
+                  ))}
+                </Accordion>
+              )}
+            </AccordionItem>
+          </Accordion>
+        </CardBody>
       </Card>
+
+      {/* <Accordion>
+        <AccordionItem
+          className="flex flex-row items-center gap-2"
+          title={"Recent activity"}
+          // indicator={<Clock />}
+        ></AccordionItem>
+        <Divider orientation="horizontal" />
+      </Accordion> */}
+
+      <Modal
+        isOpen={credentialsOpen}
+        onClose={() => setCredentialsOpen(false)}
+        title="House Credentials"
+        placement="center"
+        backdrop="blur"
+      >
+        <ModalContent className="p- pb-4">
+          <ModalHeader>
+            <Lock /> <span className="ml-2">House Credentials</span>
+          </ModalHeader>
+          <Credentials houseCredentials={house.credentials} />
+        </ModalContent>
+      </Modal>
     </div>
   );
 }

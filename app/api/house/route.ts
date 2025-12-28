@@ -24,6 +24,7 @@ export async function GET() {
         orderBy: { createdAt: "desc" },
         take: 5,
       },
+      credentials: true,
       createdBy: true,
       infos: true,
       rooms: true,

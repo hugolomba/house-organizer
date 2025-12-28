@@ -120,10 +120,7 @@ export default function App({ session }: { session: Session | null }) {
             Rooms
           </Link>
         </NavbarMenuItem>
-
         <NavbarMenuItem key="logout">
-          <Divider />
-
           <Link
             as="button"
             href="/house/rooms"
@@ -170,6 +167,7 @@ export function NavbarWithSession({ session }: { session: Session }) {
           </DropdownItem>
 
           <DropdownItem key="logout" color="danger" onPress={() => signOut()}>
+            <Divider />
             Log Out
           </DropdownItem>
         </DropdownMenu>
