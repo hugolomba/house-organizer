@@ -8,12 +8,12 @@ import {
   Card,
   CardBody,
   CardFooter,
-  ButtonGroup,
   CardHeader,
   Divider,
   Modal,
   ModalContent,
   ModalHeader,
+  user,
 } from "@heroui/react";
 
 import {
@@ -38,7 +38,8 @@ type HouseProps = {
 
 export default function HouseMain({ house }: HouseProps) {
   const [credentialsOpen, setCredentialsOpen] = useState(false);
-  console.log("Credentials modal open:", credentialsOpen);
+  const [usersOpen, setUsersOpen] = useState(false);
+  console.log(" users modal open:", usersOpen);
 
   const activeAlerts = house.alerts.filter((alert) => !alert.isResolved);
 
@@ -77,21 +78,29 @@ export default function HouseMain({ house }: HouseProps) {
             {house.address}
           </p>
           <div className="users-group-div flex flex-col items-center gap-4">
-            <AvatarGroup
-              max={3}
-              total={house.users.length}
-              renderCount={(count) => (
-                <p className="text-small text-foreground font-medium ms-2">
-                  +{count - 3} other{count - 3 === 1 ? "" : "s"}
-                </p>
-              )}
-              isBordered
-              className="mt-4"
-            >
-              {house.users.map((user) => (
-                <Avatar size="sm" key={user.id} src={user.image || undefined} />
-              ))}
-            </AvatarGroup>
+            <Card shadow="none" onPress={() => setUsersOpen(true)} isPressable>
+              <CardBody>
+                <AvatarGroup
+                  max={3}
+                  total={house.users.length}
+                  renderCount={(count) => (
+                    <p className="text-small text-foreground font-medium ms-2">
+                      +{count - 3} other{count - 3 === 1 ? "" : "s"}
+                    </p>
+                  )}
+                  isBordered
+                  className="mt-4"
+                >
+                  {house.users.map((user) => (
+                    <Avatar
+                      size="sm"
+                      key={user.id}
+                      src={user.image || undefined}
+                    />
+                  ))}
+                </AvatarGroup>
+              </CardBody>
+            </Card>
           </div>
         </CardBody>
         <CardFooter className="px-2 flex gap-4 justify-center">
@@ -184,49 +193,7 @@ export default function HouseMain({ house }: HouseProps) {
         </CardBody>
       </Card>
 
-      {/* <Card>
-        <CardHeader className="flex flex-row items-center gap-2">
-          <Clock /> <h2 className="font-bold">Recent activity</h2>
-        </CardHeader>
-        <Divider orientation="horizontal" />
-
-        <CardBody>
-          {house.activities.length === 0 ? (
-            <p className="text-center text-muted-foreground">
-              No recent activity
-            </p>
-          ) : (
-            <Accordion
-              fullWidth
-              disableIndicatorAnimation
-              isCompact
-              variant="light"
-              itemClasses={{
-                titleWrapper: "flex flex-row justify-between",
-              }}
-            >
-              {house.activities.map((activity) => (
-                <AccordionItem
-                  key={activity.id}
-                  aria-label={activity.message}
-                  title={activity.title}
-                  subtitle={timeAgoShort(new Date(activity.createdAt))}
-                  hideIndicator
-                >
-                  <p className="text-foreground/90">{activity.message}</p>
-                </AccordionItem>
-              ))}
-            </Accordion>
-          )}
-        </CardBody>
-      </Card> */}
-
       <Card>
-        {/* <CardHeader className="flex flex-row items-center gap-2">
-          <Clock />
-        </CardHeader> */}
-        {/* <Divider orientation="horizontal" /> */}
-
         <CardBody>
           <Accordion fullWidth disableIndicatorAnimation isCompact>
             <AccordionItem
@@ -265,15 +232,6 @@ export default function HouseMain({ house }: HouseProps) {
         </CardBody>
       </Card>
 
-      {/* <Accordion>
-        <AccordionItem
-          className="flex flex-row items-center gap-2"
-          title={"Recent activity"}
-          // indicator={<Clock />}
-        ></AccordionItem>
-        <Divider orientation="horizontal" />
-      </Accordion> */}
-
       <Modal
         isOpen={credentialsOpen}
         onClose={() => setCredentialsOpen(false)}
@@ -286,6 +244,33 @@ export default function HouseMain({ house }: HouseProps) {
             <Lock /> <span className="ml-2">House Credentials</span>
           </ModalHeader>
           <Credentials houseCredentials={house.credentials} />
+        </ModalContent>
+      </Modal>
+
+      <Modal
+        isOpen={usersOpen}
+        onClose={() => setUsersOpen(false)}
+        title="House Users"
+        placement="center"
+        backdrop="blur"
+      >
+        <ModalContent className="p- pb-4">
+          <ModalHeader>
+            <h2 className="flex flex-row items-center gap-2">
+              {house.users.length} people in {house.name}
+            </h2>
+          </ModalHeader>
+          <div className="flex flex-col gap-2 p-4  overflow-y-auto">
+            {house.users.map((user) => (
+              <div key={user.id} className="flex flex-row items-center gap-4">
+                <Avatar size="md" src={user.image || undefined} />
+                <div className="flex flex-col">
+                  <p className="font-medium">{user.name}</p>
+                  <p className="text-sm text-muted-foreground">{user.email}</p>
+                </div>
+              </div>
+            ))}
+          </div>
         </ModalContent>
       </Modal>
     </div>

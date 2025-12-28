@@ -2,7 +2,6 @@
 
 import { Prisma } from "@/prisma/generated/browser";
 import { Accordion, AccordionItem, Button, Chip, Input } from "@heroui/react";
-import { Payload } from "@prisma/client/runtime/client";
 import {
   Copy,
   ExternalLink,
@@ -54,29 +53,6 @@ export default function Credentials({
   };
 
   return (
-    // <div className="p-4">
-    //   <h2>Credentials Component</h2>
-    //   <p>This is where the credentials information will be displayed.</p>
-    // </div>
-    // <Accordion>
-    //   {houseCredentials.map((credential) => (
-    //     <AccordionItem
-    //       key={credential.id}
-    //       value={credential.id}
-    //       title={credential.label}
-    //     >
-    //       <p className="break-all">
-    //         <span className="">Email: </span>
-    //         {credential.email}
-    //       </p>
-    //       <p className=" break-all">
-    //         <span>Password: </span>
-    //         {credential.password}
-    //       </p>
-    //     </AccordionItem>
-    //   ))}
-    // </Accordion>
-
     <Accordion
       variant="splitted"
       isCompact
