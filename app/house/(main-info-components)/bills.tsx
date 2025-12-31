@@ -196,6 +196,7 @@ export default function Bills({ houseBills }: { houseBills: HouseBills }) {
               as={Link}
               href="/house/bills"
               variant="flat"
+              size="sm"
               color="primary"
               onPress={() => setIsModalOpen(false)}
             >
@@ -216,7 +217,7 @@ export default function Bills({ houseBills }: { houseBills: HouseBills }) {
           </ModalFooter>
         </ModalContent>
       </Modal>
-      <Button as={Link} href="/house/bills" variant="flat" color="primary">
+      <Button as={Link} href="/house/bills" variant="flat">
         View All Bills
       </Button>
     </div>

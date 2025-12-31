@@ -1,6 +1,6 @@
 "use client";
 
-import { Checkbox, Chip } from "@heroui/react";
+import { Checkbox, Chip, Button, Link } from "@heroui/react";
 import { House, Bath, Fence, BedDouble, CookingPot } from "lucide-react";
 import { Prisma } from "@/prisma/generated/browser";
 import { toggleTaskStatus } from "@/lib/actions/tasks-actions";
@@ -75,6 +75,9 @@ export default function Tasks({ houseTasks }: TasksProps) {
           </Checkbox>
         ) : null
       )}
+      <Button as={Link} href="/house/tasks" variant="flat">
+        Go to All Tasks
+      </Button>
     </div>
   );
 }

@@ -30,7 +30,7 @@ export default function App({ session }: { session: Session | null }) {
 
   return (
     <Navbar
-      isBordered
+      // isBordered
       shouldHideOnScroll
       maxWidth="xl"
       isMenuOpen={isMenuOpen}

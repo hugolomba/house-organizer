@@ -1,6 +1,6 @@
 "use client";
 
-import { addToast, Alert, Button, closeToast } from "@heroui/react";
+import { addToast, Alert, Button, closeToast, Link } from "@heroui/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import {
@@ -113,6 +113,9 @@ export default function Alerts({ houseAlerts }: { houseAlerts: HouseAlerts }) {
               key={alert.id}
               color={defineAlertColor(alert.id, alert.priority)}
               variant={defineAlertVariant(alert.priority)}
+              classNames={{
+                title: "line-clamp-2 break-words break-all overflow-hidden",
+              }}
               endContent={
                 resolvingAlertId === alert.id ? (
                   <Button className="w-24" isLoading size="sm" variant="flat">
@@ -134,6 +137,9 @@ export default function Alerts({ houseAlerts }: { houseAlerts: HouseAlerts }) {
             />
           )
       )}
+      <Button as={Link} href="/house/alerts" variant="flat">
+        Go to All Alerts
+      </Button>
     </div>
   );
 }

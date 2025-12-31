@@ -34,6 +34,7 @@ import Bills from "./(main-info-components)/bills";
 import { useState } from "react";
 import Credentials from "./(main-info-components)/credentials";
 import Tasks from "./(main-info-components)/tasks";
+import CreateAlert from "./(add-components)/create-alert";
 
 type HouseProps = {
   house: NonNullable<Awaited<ReturnType<typeof getHouseById>>>;
@@ -44,6 +45,10 @@ export default function HouseMain({ house }: HouseProps) {
   const [usersOpen, setUsersOpen] = useState(false);
   const [inviteIsOpen, setInviteIsOpen] = useState(false);
   const [copied, setCopied] = useState(false);
+  // quick actions
+  const [createAlertIsOpen, setCreateAlertIsOpen] = useState(false);
+  const [addBillIsOpen, setAddBillIsOpen] = useState(false);
+  const [newTaskIsOpen, setNewTaskIsOpen] = useState(false);
 
   console.log(" users modal open:", usersOpen);
 
@@ -205,10 +210,20 @@ export default function HouseMain({ house }: HouseProps) {
             variant="flat"
             color="danger"
             startContent={<TriangleAlert />}
+            onPress={() => setCreateAlertIsOpen(true)}
           >
             Create Alert
           </Button>
-          <Button variant="flat" color="success" startContent={<Euro />}>
+          <CreateAlert
+            createAlertIsOpen={createAlertIsOpen}
+            setCreateAlertIsOpen={setCreateAlertIsOpen}
+          />
+          <Button
+            variant="flat"
+            color="success"
+            startContent={<Euro />}
+            onPress={() => setAddBillIsOpen(true)}
+          >
             Add Bill
           </Button>
 
@@ -216,6 +231,7 @@ export default function HouseMain({ house }: HouseProps) {
             variant="flat"
             color="primary"
             startContent={<ClipboardList />}
+            onPress={() => setNewTaskIsOpen(true)}
           >
             New Task
           </Button>
