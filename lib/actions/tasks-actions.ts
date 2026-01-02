@@ -51,3 +51,47 @@ export async function toggleTaskStatus(taskId: number) {
 
   return updatedTask;
 }
+
+// create a task
+export async function createTask(formData: FormData, houseId: number) {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  if (!session) {
+    throw new Error("User not authenticated");
+  }
+
+  const title = formData.get("title") as string;
+  const description = formData.get("description") as string | null;
+  const roomId = Number(formData.get("roomId"));
+  const assignedIds = formData.getAll("assignedIds") as string[];
+
+  const task = await prisma.task.create({
+    data: {
+      title,
+      description,
+      houseId,
+      roomId,
+      assigned: {
+        connect: assignedIds.map((id) => ({ id })),
+      },
+    },
+  });
+
+  await logActivity({
+    houseId: task.houseId,
+    userId: session.user.id,
+    type: "CREATE",
+    entity: "TASK",
+    entityId: task.id,
+    title: `Task "${task.title}" has been created
+    }`,
+    message: `${session.user.name} has created the task "${task.title}"
+    }`,
+  });
+
+  revalidatePath("/house");
+
+  return task;
+}

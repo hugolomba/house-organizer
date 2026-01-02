@@ -36,6 +36,7 @@ import Credentials from "./(main-info-components)/credentials";
 import Tasks from "./(main-info-components)/tasks";
 import CreateAlert from "./(add-components)/create-alert";
 import CreateBill from "./(add-components)/create-bill";
+import CreateTask from "./(add-components)/create-task";
 
 type HouseProps = {
   house: NonNullable<Awaited<ReturnType<typeof getHouseById>>>;
@@ -243,6 +244,13 @@ export default function HouseMain({ house }: HouseProps) {
           >
             New Task
           </Button>
+          <CreateTask
+            createTaskIsOpen={newTaskIsOpen}
+            setCreateTaskIsOpen={setNewTaskIsOpen}
+            users={house.users}
+            rooms={house.rooms}
+            houseId={house.id}
+          />
         </CardBody>
       </Card>
 
