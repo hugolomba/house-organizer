@@ -121,10 +121,10 @@ export default function BillCard({ bill }: BillCardProps) {
       >
         <CardHeader className="flex justify-between px-2 py-1">
           <div className="flex flex-row items-center justify-center gap-2">
-            <ReceiptEuro size={30} />
+            {/* <ReceiptEuro size={30} /> */}
 
             <div className="flex flex-col items-start">
-              <h2 className="text-2xl font-bold">{bill.title}</h2>
+              <h2 className="text-xl font-bold">{bill.title}</h2>
               <h3 className="text-xs">{bill.description}</h3>
             </div>
           </div>

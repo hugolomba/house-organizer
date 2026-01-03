@@ -1,15 +1,8 @@
 import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
-import {
-  getHouseById,
-  getHouseByUserId,
-  getUserById,
-} from "@/lib/actions/house-actions";
+import { getHouseById, getUserById } from "@/lib/actions/house-actions";
 import HouseMain from "./house-main";
-import { get } from "http";
-import { House } from "lucide-react";
-import HouseSecond from "./house-second";
 
 export default async function Home() {
   // get user session

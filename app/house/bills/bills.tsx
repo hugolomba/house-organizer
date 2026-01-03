@@ -84,7 +84,11 @@ export default function Bills({ house }: HouseProps) {
   return (
     <>
       <div className="flex items-center">
-        <Button color="default" onPress={() => setAddBillIsOpen(true)}>
+        <Button
+          color="default"
+          size="sm"
+          onPress={() => setAddBillIsOpen(true)}
+        >
           + New Bill
         </Button>
 
