@@ -3,7 +3,7 @@
 import { Prisma } from "@/prisma/generated/browser";
 import { Button } from "@heroui/react";
 import Link from "next/link";
-import BillCard from "./bill-card";
+import BillCard from "../bills/(bill-components)/bill-card";
 
 type HouseBills = Prisma.HouseGetPayload<{
   include: {

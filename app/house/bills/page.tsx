@@ -1,9 +1,9 @@
 import { headers } from "next/dist/server/request/headers";
-import AddBillButton from "./add-bill-button";
 import { redirect } from "next/dist/client/components/navigation";
 import { auth } from "@/lib/auth";
 import Bills from "./bills";
 import { getBillsByHouseId } from "@/lib/actions/bills-actions";
+import { getHouseById, getHouseByUserId } from "@/lib/actions/house-actions";
 
 export default async function BillsPage() {
   const session = await auth.api.getSession({
@@ -14,7 +14,9 @@ export default async function BillsPage() {
     redirect("/auth");
   }
 
-  const houseBills = await getBillsByHouseId(session.user.houseId!);
+  const house = await getHouseById(session.user.houseId!);
+
+  console.log("HOUSE IN BILLS PAGE:", house);
 
   return (
     <div className="w-full">
@@ -25,8 +27,8 @@ export default async function BillsPage() {
             Track and manage shared expenses in your house
           </p>
         </header>
-        <AddBillButton />
-        <Bills houseBills={houseBills} />
+
+        <Bills house={house} />
       </div>
     </div>
   );

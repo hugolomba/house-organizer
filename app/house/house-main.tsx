@@ -35,7 +35,7 @@ import { useState } from "react";
 import Credentials from "./(main-info-components)/credentials";
 import Tasks from "./(main-info-components)/tasks";
 import CreateAlert from "./(add-components)/create-alert";
-import CreateBill from "./(add-components)/create-bill";
+import CreateBill from "../house/bills/(bill-components)/create-bill";
 import CreateTask from "./(add-components)/create-task";
 
 type HouseProps = {

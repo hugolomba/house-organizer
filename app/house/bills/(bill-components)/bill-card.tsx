@@ -16,10 +16,11 @@ import {
   Divider,
   Chip,
   Button,
-  Link,
+  Progress,
 } from "@heroui/react";
 import { useState, useTransition } from "react";
 import { markShareAsPaid } from "@/lib/actions/bills-actions";
+import { ReceiptEuro } from "lucide-react";
 
 type HouseBills = Prisma.HouseGetPayload<{
   include: {
@@ -64,6 +65,26 @@ export default function BillCard({ bill }: BillCardProps) {
     return `Due in ${diffInDays} days`;
   };
 
+  const getDueColor = (dueDate: Date) => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const due = new Date(dueDate);
+    due.setHours(0, 0, 0, 0);
+
+    const diffInDays =
+      (due.getTime() - today.getTime()) / (1000 * 60 * 60 * 24);
+
+    if (diffInDays < 0) return "danger";
+    if (diffInDays === 0) return "warning";
+    if (diffInDays <= 3) return "primary";
+    if (billPaid) return "success";
+
+    return "default";
+  };
+
+  const billPaid = bill.shares.every((share) => share.paid);
+
   const handleMarkAsPaid = (billId: number) => {
     startTransition(() => {
       markShareAsPaid(billId);
@@ -98,18 +119,30 @@ export default function BillCard({ bill }: BillCardProps) {
           setIsModalOpen(true);
         }}
       >
-        <CardHeader className="flex justify-between">
-          <span className="font-bold">{bill.title}</span>
-          <span className="font-semibold">
-            {getDueLabel(new Date(bill.dueDate))}
-          </span>
+        <CardHeader className="flex justify-between px-2 py-1">
+          <div className="flex flex-row items-center justify-center gap-2">
+            <ReceiptEuro size={30} />
+
+            <div className="flex flex-col items-start">
+              <h2 className="text-2xl font-bold">{bill.title}</h2>
+              <h3 className="text-xs">{bill.description}</h3>
+            </div>
+          </div>
+
+          <div>
+            <p className="text-xl font-bold">€ {bill.totalValue}</p>
+
+            <Chip size="sm" color={getDueColor(new Date(bill.dueDate))}>
+              {getDueLabel(new Date(bill.dueDate))}
+            </Chip>
+          </div>
         </CardHeader>
+        <Divider />
         <CardBody className="p-0">
-          <div className="flex flex-col items-center justify-center gap-1">
-            <p className="text-md text-muted-foreground">
-              <span className="font-semibold">Total Amount:</span>
-              <span>€ {bill.totalValue}</span>
-            </p>
+          <div className="flex flex-col-reverse items-center mt-2">
+            <span className="text-xs">
+              Shared between {bill.shares.length} users
+            </span>
             <AvatarGroup className=" mt-2 mb-2">
               {bill.shares.map((share) => (
                 <Avatar
@@ -119,21 +152,37 @@ export default function BillCard({ bill }: BillCardProps) {
                   src={share.user?.image || ""}
                   isBordered
                   color={share.paid ? "success" : "danger"}
+                  title={share.user.name}
                 />
               ))}
             </AvatarGroup>
-            <p className="text-sm text-muted-foreground">
-              {bill.shares.every((share) => share.paid)
-                ? "All shares paid"
-                : `${bill.shares.filter((share) => share.paid).length} of ${
-                    bill.shares.length
-                  } shares paid`}
-            </p>
           </div>
         </CardBody>
-        <CardFooter className="flex justify-center"></CardFooter>
+        <CardFooter className="flex flex-col gap-2 justify-center">
+          <Progress
+            aria-label="bill shares progress"
+            value={
+              (bill.shares.filter((share) => share.paid).length /
+                bill.shares.length) *
+              100
+            }
+            size="sm"
+          />
+          <p className="text-sm text-muted-foreground">
+            {bill.shares.every((share) => share.paid)
+              ? "All shares paid"
+              : `${bill.shares.filter((share) => share.paid).length} of ${
+                  bill.shares.length
+                } shares paid`}
+          </p>
+        </CardFooter>
       </Card>
-      <Modal isOpen={isModalOpen} onOpenChange={setIsModalOpen} backdrop="blur">
+      <Modal
+        isOpen={isModalOpen}
+        onOpenChange={setIsModalOpen}
+        backdrop="blur"
+        placement="center"
+      >
         <ModalContent>
           <ModalHeader className="text-xl">{selectedBill?.title}</ModalHeader>
           <ModalBody>
@@ -179,16 +228,6 @@ export default function BillCard({ bill }: BillCardProps) {
             )}
           </ModalBody>
           <ModalFooter>
-            <Button
-              as={Link}
-              href="/house/bills"
-              variant="flat"
-              size="sm"
-              color="primary"
-              onPress={() => setIsModalOpen(false)}
-            >
-              Go to All Bills
-            </Button>
             {userShare && !userShare.paid && (
               <Button
                 isLoading={isPending}
