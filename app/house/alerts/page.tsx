@@ -1,11 +1,10 @@
 import { headers } from "next/dist/server/request/headers";
 import { redirect } from "next/dist/client/components/navigation";
 import { auth } from "@/lib/auth";
-import Bills from "./(bill-components)/bills";
-import { getBillsByHouseId } from "@/lib/actions/bills-actions";
-import { getHouseById, getHouseByUserId } from "@/lib/actions/house-actions";
+import { getHouseById } from "@/lib/actions/house-actions";
+import Alerts from "./(alerts-components)/alerts";
 
-export default async function BillsPage() {
+export default async function AlertsPage() {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
@@ -16,19 +15,17 @@ export default async function BillsPage() {
 
   const house = await getHouseById(session.user.houseId!);
 
-  console.log("HOUSE IN BILLS PAGE:", house);
-
   return (
     <div className="w-full">
       <div className="mx-auto max-w-6xl px-4 py-6 space-y-6">
         <header className="space-y-1">
-          <h1 className="text-2xl font-semibold">House Bills</h1>
+          <h1 className="text-2xl font-semibold">House Alerts</h1>
           <p className="text-sm text-default-500">
-            Track and manage shared expenses in your house
+            Track and manage alerts in your house
           </p>
         </header>
 
-        <Bills house={house} />
+        <Alerts house={house} />
       </div>
     </div>
   );

@@ -34,7 +34,7 @@ import Bills from "./(main-info-components)/bills";
 import { useState } from "react";
 import Credentials from "./(main-info-components)/credentials";
 import Tasks from "./(main-info-components)/tasks";
-import CreateAlert from "./(add-components)/create-alert";
+import CreateAlert from "./alerts/(alerts-components)/create-alert";
 import CreateBill from "../house/bills/(bill-components)/create-bill";
 import CreateTask from "./(add-components)/create-task";
 

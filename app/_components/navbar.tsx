@@ -46,17 +46,22 @@ export default function App({ session }: { session: Session | null }) {
 
       <NavbarContent className="hidden sm:flex" justify="center">
         <NavbarItem>
-          <Link color="foreground" href="#">
+          <Link color="foreground" href="/house/alerts">
+            Alerts
+          </Link>
+        </NavbarItem>
+        <NavbarItem>
+          <Link color="foreground" href="/house/bills">
             Bills
           </Link>
         </NavbarItem>
         <NavbarItem>
-          <Link color="foreground" href="#">
+          <Link color="foreground" href="/house/tasks">
             Tasks
           </Link>
         </NavbarItem>
         <NavbarItem>
-          <Link color="foreground" href="#">
+          <Link color="foreground" href="/house/rooms">
             Rooms
           </Link>
         </NavbarItem>
@@ -103,6 +108,11 @@ export default function App({ session }: { session: Session | null }) {
         <NavbarMenuItem key="profile">
           <Link className="" href="/user/profile" color="primary" size="lg">
             Profile
+          </Link>
+        </NavbarMenuItem>
+        <NavbarMenuItem key="alerts">
+          <Link className="" href="/house/alerts" color="primary" size="lg">
+            Alerts
           </Link>
         </NavbarMenuItem>
         <NavbarMenuItem key="bills">

@@ -7,10 +7,10 @@ import {
   DropdownTrigger,
   Input,
 } from "@heroui/react";
-import BillCard from "./(bill-components)/bill-card";
+import BillCard from "./bill-card";
 import { Prisma } from "@/prisma/generated/browser";
 import { useState } from "react";
-import CreateBill from "./(bill-components)/create-bill";
+import CreateBill from "./create-bill";
 
 type HouseProps = {
   house: Prisma.HouseGetPayload<{

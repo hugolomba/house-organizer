@@ -19,8 +19,13 @@ import {
   Progress,
 } from "@heroui/react";
 import { useState, useTransition } from "react";
-import { markShareAsPaid } from "@/lib/actions/bills-actions";
-import { ReceiptEuro } from "lucide-react";
+import {
+  deleteBill,
+  markAllSharesAsPaid,
+  markShareAsPaid,
+} from "@/lib/actions/bills-actions";
+import { ReceiptEuro, Trash } from "lucide-react";
+import { set } from "better-auth";
 
 type HouseBills = Prisma.HouseGetPayload<{
   include: {
@@ -47,6 +52,11 @@ export default function BillCard({ bill }: BillCardProps) {
     null
   );
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [pendingAction, setPendingAction] = useState<
+    "mark-one" | "mark-all" | "delete" | null
+  >(null);
+  const [deleteConfirmationOpen, setDeleteConfirmationOpen] = useState(false);
+  const [isDeleted, setIsDeleted] = useState(false);
 
   const getDueLabel = (dueDate: Date) => {
     const today = new Date();
@@ -86,6 +96,7 @@ export default function BillCard({ bill }: BillCardProps) {
   const billPaid = bill.shares.every((share) => share.paid);
 
   const handleMarkAsPaid = (billId: number) => {
+    setPendingAction("mark-one");
     startTransition(() => {
       markShareAsPaid(billId);
       setSelectedBill((prev) => {
@@ -103,9 +114,34 @@ export default function BillCard({ bill }: BillCardProps) {
     });
   };
 
+  const handleMarkAllAsPaid = (billId: number) => {
+    setPendingAction("mark-all");
+    startTransition(() => {
+      markAllSharesAsPaid(billId);
+      setSelectedBill((prev) => {
+        if (!prev) return prev;
+
+        return {
+          ...prev,
+          shares: prev.shares.map((share) => ({ ...share, paid: true })),
+        };
+      });
+    });
+  };
+
+  const handleDeleteBill = (billId: number) => {
+    setPendingAction("delete");
+    startTransition(() => {
+      deleteBill(billId);
+      setIsDeleted(true);
+    });
+  };
+
   const userShare = selectedBill?.shares.find(
     (share) => share.userId === selectedBill.responsibleId
   );
+
+  const hasUnpaidShares = bill.shares.some((share) => !share.paid);
 
   return (
     <>
@@ -230,14 +266,99 @@ export default function BillCard({ bill }: BillCardProps) {
           <ModalFooter>
             {userShare && !userShare.paid && (
               <Button
-                isLoading={isPending}
+                isLoading={isPending && pendingAction === "mark-one"}
                 variant="flat"
                 color="primary"
                 onPress={() => {
                   handleMarkAsPaid(selectedBill!.id);
                 }}
               >
-                {isPending ? "Marking as Paid..." : "Mark Your Part as Paid"}
+                {isPending && pendingAction === "mark-one"
+                  ? "Marking as Paid..."
+                  : "Mark Your Part as Paid"}
+              </Button>
+            )}
+            {hasUnpaidShares && (
+              <Button
+                isLoading={isPending && pendingAction === "mark-all"}
+                variant="flat"
+                color="primary"
+                onPress={() => {
+                  handleMarkAllAsPaid(selectedBill!.id);
+                }}
+              >
+                {isPending && pendingAction === "mark-all"
+                  ? "Marking All as Paid..."
+                  : "Mark All as Paid"}
+              </Button>
+            )}
+            <Button
+              variant="flat"
+              color="danger"
+              endContent={<Trash />}
+              onPress={() => {
+                setDeleteConfirmationOpen(true);
+              }}
+            >
+              Delete Bill
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+
+      {/* confirmation modal */}
+      <Modal
+        isOpen={deleteConfirmationOpen}
+        onOpenChange={() => {
+          setDeleteConfirmationOpen(false);
+        }}
+        backdrop="blur"
+        placement="center"
+      >
+        <ModalContent>
+          <ModalHeader className="text-xl">Confirm Deletion</ModalHeader>
+          <ModalBody>
+            {isDeleted ? (
+              "The bill has been deleted."
+            ) : (
+              <>
+                Are you sure you want to delete the bill `&quot;`
+                {selectedBill?.title}`&quot;`? This action cannot be undone.
+              </>
+            )}
+          </ModalBody>
+          <ModalFooter>
+            {!isDeleted ? (
+              <>
+                <Button
+                  variant="flat"
+                  onPress={() => {
+                    setDeleteConfirmationOpen(false);
+                  }}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  variant="flat"
+                  isLoading={isPending && pendingAction === "delete"}
+                  color="danger"
+                  onPress={() => {
+                    handleDeleteBill(selectedBill!.id);
+                  }}
+                >
+                  {isPending && pendingAction === "delete"
+                    ? "Deleting..."
+                    : "Delete Bill"}
+                </Button>
+              </>
+            ) : (
+              <Button
+                variant="flat"
+                onPress={() => {
+                  setDeleteConfirmationOpen(false);
+                }}
+              >
+                OK
               </Button>
             )}
           </ModalFooter>
