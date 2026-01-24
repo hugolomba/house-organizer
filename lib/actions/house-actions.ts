@@ -155,6 +155,23 @@ export async function getUserById(userId: string) {
 
 // get house by house id
 export async function getHouseById(houseId: number) {
+  // authorization check
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  if (!session?.user?.id) {
+    throw new Error("Not authenticated");
+  }
+
+  const user = await prisma.user.findUnique({
+    where: { id: session.user.id },
+  });
+
+  if (!user?.houseId || user.houseId !== houseId) {
+    throw new Error("Not authorized in this house");
+  }
+
   const house = await prisma.house.findUnique({
     where: { id: houseId },
     include: {
