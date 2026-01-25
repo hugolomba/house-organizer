@@ -29,7 +29,7 @@ export default function Credentials({
   }>["credentials"];
 }) {
   const [visiblePasswordId, setVisiblePasswordId] = useState<number | null>(
-    null
+    null,
   );
   const [isDeleting, setIsDeleting] = useState(false);
   const [decryptedPasswords, setDecryptedPasswords] = useState<
@@ -37,7 +37,7 @@ export default function Credentials({
   >({});
 
   const sortedCredentials = [...houseCredentials].sort((a, b) =>
-    a.label.localeCompare(b.label)
+    a.label.localeCompare(b.label),
   );
 
   const handleCopy = async (value: string) => {
@@ -60,7 +60,7 @@ export default function Credentials({
     }
 
     setVisiblePasswordId((prev) =>
-      prev === credentialId ? null : credentialId
+      prev === credentialId ? null : credentialId,
     );
   };
 
@@ -146,7 +146,7 @@ export default function Credentials({
                 type={visiblePasswordId === credential.id ? "text" : "password"}
                 value={
                   visiblePasswordId === credential.id
-                    ? decryptedPasswords[credential.id] ?? ""
+                    ? (decryptedPasswords[credential.id] ?? "")
                     : ""
                 }
                 readOnly

@@ -154,7 +154,7 @@ export default function BillCard({ bill }: BillCardProps) {
           setSelectedBill(bill);
           setIsModalOpen(true);
         }}
-        className="bg-gray-50/90"
+        className="bg-gray-50/90 border border-gray-300"
       >
         <CardHeader className="flex justify-between px-2 py-1">
           <div className="flex flex-row items-center justify-center gap-2">

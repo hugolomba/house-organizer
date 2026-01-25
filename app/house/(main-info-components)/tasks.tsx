@@ -4,13 +4,14 @@ import { Checkbox, Chip, Button, Link } from "@heroui/react";
 import { House, Bath, Fence, BedDouble, CookingPot } from "lucide-react";
 import { Prisma } from "@/prisma/generated/browser";
 import { toggleTaskStatus } from "@/lib/actions/tasks-actions";
+import MainButton from "@/app/_components/main-button";
 
 type TasksProps = {
   houseTasks: Prisma.HouseGetPayload<{
     include: {
       tasks: {
         include: {
-          room?: {
+          room: {
             select: {
               name: true;
               roomType: true;
@@ -49,7 +50,7 @@ export default function Tasks({ houseTasks }: TasksProps) {
   };
 
   return (
-    <div className="w-full flex flex-col gap-3">
+    <div className="w-full flex flex-col gap-6">
       {houseTasks.map((task) =>
         !task.status ? (
           <Checkbox
@@ -77,9 +78,7 @@ export default function Tasks({ houseTasks }: TasksProps) {
           </Checkbox>
         ) : null,
       )}
-      <Button as={Link} href="/house/tasks" variant="flat">
-        Go to All Tasks
-      </Button>
+      <MainButton href="/house/tasks">Go to All Tasks</MainButton>
     </div>
   );
 }

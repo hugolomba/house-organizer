@@ -73,7 +73,7 @@ export async function createTask(formData: FormData, houseId: number) {
       title,
       description,
       houseId,
-      roomId,
+      roomId: roomId ? roomId : null,
       assigned: {
         connect: assignedIds.map((id) => ({ id })),
       },

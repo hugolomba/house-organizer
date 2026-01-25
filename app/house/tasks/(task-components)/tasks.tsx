@@ -66,7 +66,7 @@ type HouseProps = {
 
 export default function Tasks({ house }: HouseProps) {
   const [addTaskIsOpen, setAddTaskIsOpen] = useState(false);
-  const [viewType, setViewType] = useState<"byRoom" | "All">("byRoom");
+  const [viewType, setViewType] = useState<"byRoom" | "All">("All");
 
   const defineRoomIcon = (roomType: string) => {
     switch (roomType) {
@@ -115,8 +115,8 @@ export default function Tasks({ house }: HouseProps) {
             selectionMode="single"
             selectedKeys={[viewType]}
           >
-            <DropdownItem key="byRoom">Tasks by Room</DropdownItem>
             <DropdownItem key="All">All Tasks</DropdownItem>
+            <DropdownItem key="byRoom">Tasks by Room</DropdownItem>
           </DropdownMenu>
         </Dropdown>
       </div>

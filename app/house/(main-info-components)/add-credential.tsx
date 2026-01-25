@@ -2,6 +2,7 @@
 import { Form, Input, RadioGroup, Radio, Button } from "@heroui/react";
 import { useState } from "react";
 import { createCredential } from "@/lib/actions/credentials-actions";
+import MainButton from "@/app/_components/main-button";
 
 export default function AddCredential({
   setAddCredentialIsOpen,
@@ -71,21 +72,18 @@ export default function AddCredential({
             <Input label="Notes" name="notes" type="text" size="sm" />
 
             <div className="flex flex-row gap-4 mt-4">
-              <Button
+              <MainButton
                 type="submit"
-                size="sm"
-                variant="flat"
                 // onPress={(e) => handleCreateCredential(e as React.FormEvent<HTMLFormElement>)}
               >
                 Add Credential
-              </Button>
-              <Button
-                size="sm"
-                variant="flat"
-                onPress={() => setAddCredentialIsOpen(false)}
+              </MainButton>
+              <MainButton
+                className="p-0 bg-gray-600 text-black hover:bg-gray-300"
+                onClick={() => setAddCredentialIsOpen(false)}
               >
                 Back to Credentials
-              </Button>
+              </MainButton>
             </div>
           </Form>
         </div>

@@ -142,8 +142,8 @@ export default function CreateHouseForm() {
                 <h3 className="text-md">
                   Use your house code to invite your housemates to join!
                 </h3>
-                <div className="bg-gray-100 p-4 rounded w-full break-all text-center">
-                  <p className="font-mono text-sm">
+                <div className=" p-4 rounded w-full break-all text-center">
+                  <p className="text-foreground font-mono text-sm">
                     {createdHouse?.inviteCode}
                   </p>
                 </div>

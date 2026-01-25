@@ -78,12 +78,13 @@ export default function CreateTask({
               type="text"
             />
 
-            <Select isRequired name="roomId" label="Select Room">
-              {rooms.map((room) => (
-                <SelectItem key={room.id}>{room.name}</SelectItem>
-              ))}
-            </Select>
-
+            {rooms.length > 0 && (
+              <Select name="roomId" label="Room">
+                {rooms.map((room) => (
+                  <SelectItem key={room.id}>{room.name}</SelectItem>
+                ))}
+              </Select>
+            )}
             <Select isRequired name="assignedIds" label="Assign Users" multiple>
               {users.map((user) => (
                 <SelectItem key={user.id}>{user.name}</SelectItem>

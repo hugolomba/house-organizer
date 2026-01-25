@@ -45,6 +45,7 @@ import Rooms from "./(main-info-components)/rooms";
 import Image from "next/image";
 import { div } from "framer-motion/m";
 import MainButton from "../_components/main-button";
+import Link from "next/link";
 
 type HouseProps = {
   house: NonNullable<Awaited<ReturnType<typeof getHouseById>>>;
@@ -160,7 +161,7 @@ export default function HouseMain({ house }: HouseProps) {
         <CardFooter className="flex gap-4 justify-center py-4">
           <Button
             size="md"
-            className="rounded-full bg-white dark:bg-gray-800 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700/70"
+            className="rounded-full bg-white/10 hover:bg-white/15 text-white border border-white/20"
             onPress={() => setOpenModal("invite")}
           >
             Invite
@@ -168,16 +169,18 @@ export default function HouseMain({ house }: HouseProps) {
           <Button
             startContent={<Lock size={15} />}
             size="md"
-            className="rounded-full bg-white dark:bg-gray-800 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700/70"
+            className="rounded-full bg-white/10 hover:bg-white/15 text-white border border-white/20"
             onPress={() => setOpenModal("credentials")}
           >
             Credentials
           </Button>
           <Button
+            as={Link}
             size="md"
+            href="/settings"
             // variant="ghost"
             startContent={<Settings size={15} />}
-            className="rounded-full bg-white dark:bg-gray-800 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700/70"
+            className="rounded-full bg-white/10 hover:bg-white/15 text-white border border-white/20"
           >
             Settings
           </Button>
@@ -344,13 +347,15 @@ export default function HouseMain({ house }: HouseProps) {
         houseId={house.id}
       />
       <Modal
-        isOpen={openModal === "credentials"}
+        isOpen={openModal === "credentials" || openModal === "addCredential"}
         onClose={() => setOpenModal(null)}
-        title="House Credentials"
+        title={
+          openModal === "addCredential" ? "Add Credential" : "House Credentials"
+        }
         placement="center"
         backdrop="blur"
       >
-        <ModalContent className="p- pb-4">
+        <ModalContent className="p-4 pb-4">
           <ModalHeader className="flex- flex-col">
             <div className="flex flex-row justify-center">
               <Lock /> <span className="ml-2">House Credentials</span>
@@ -358,22 +363,20 @@ export default function HouseMain({ house }: HouseProps) {
             <Alert
               description="Passwords are securely encrypted. Only authorized house members can access them."
               variant="flat"
-              className="mt-2"
+              className="mt-2 text-center"
               color="warning"
               hideIcon
             />
           </ModalHeader>
 
           {openModal !== "addCredential" ? (
-            <ModalBody>
-              <Button
-                size="sm"
-                variant="flat"
+            <ModalBody className="p-0">
+              <MainButton
                 className="mb-2 mx-4"
-                onPress={() => setOpenModal("addCredential")}
+                onClick={() => setOpenModal("addCredential")}
               >
                 + Add Credential
-              </Button>
+              </MainButton>
               <Credentials houseCredentials={house.credentials} />
             </ModalBody>
           ) : (

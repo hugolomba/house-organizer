@@ -4,6 +4,7 @@ import { Prisma } from "@/prisma/generated/browser";
 import { Button } from "@heroui/react";
 import Link from "next/link";
 import BillCard from "../bills/(bill-components)/bill-card";
+import MainButton from "@/app/_components/main-button";
 
 type HouseBills = Prisma.HouseGetPayload<{
   include: {
@@ -32,7 +33,7 @@ export default function Bills({ houseBills }: { houseBills: HouseBills }) {
   });
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-6">
       <p className="text-sm">
         You are seeing the upcoming bills within the next {UPCOMING_DAYS} days.
       </p>
@@ -43,9 +44,7 @@ export default function Bills({ houseBills }: { houseBills: HouseBills }) {
         <BillCard key={bill.id} bill={bill} />
       ))}
 
-      <Button as={Link} href="/house/bills" variant="flat">
-        View All Bills
-      </Button>
+      <MainButton href="/house/bills">View All Bills</MainButton>
     </div>
   );
 }

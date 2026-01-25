@@ -84,11 +84,11 @@ model House {
   name        String
   address     String?
   imageUrl    String?   
-  createdById String
+  createdById String?
   inviteCode  String      @unique @default(uuid())
   alerts      Alert[]
   bills       Bill[]
-  createdBy   User        @relation("HouseCreator", fields: [createdById], references: [id])
+  createdBy   User?       @relation("HouseCreator", fields: [createdById], references: [id], onDelete: SetNull)
   infos       HouseInfo[]
   tasks Task[]
 
@@ -103,7 +103,7 @@ model Room {
   id        Int      @id @default(autoincrement())
   name      String
   houseId   Int
-  house     House    @relation(fields: [houseId], references: [id])
+  house     House    @relation(fields: [houseId], references: [id], onDelete: Cascade)
   roomType  RoomType
   isCommon  Boolean  @default(false)
   tasks     Task[]
@@ -118,10 +118,10 @@ model Task {
   status      Boolean @default(false)
 
   houseId Int
-  house   House @relation(fields: [houseId], references: [id])
+  house   House @relation(fields: [houseId], references: [id], onDelete: Cascade)
 
   roomId Int?
-  room   Room?  @relation(fields: [roomId], references: [id])
+  room   Room?  @relation(fields: [roomId], references: [id], onDelete: SetNull)
 
   assigned User[] @relation("TaskAssignees")
 }
@@ -133,20 +133,20 @@ model Bill {
   totalValue    Float
   dueDate       DateTime
   houseId       Int
-  responsibleId String
-  house         House    @relation(fields: [houseId], references: [id])
-  responsible   User     @relation(fields: [responsibleId], references: [id])
+  responsibleId String?
+  house         House    @relation(fields: [houseId], references: [id], onDelete: Cascade)
+  responsible   User?    @relation(fields: [responsibleId], references: [id], onDelete: SetNull)
   shares        Share[]
 }
 
 model Share {
   id     Int     @id @default(autoincrement())
   billId Int
-  userId String
+  userId String?
   value  Float
   paid   Boolean @default(false)
   bill   Bill    @relation(fields: [billId], references: [id])
-  user   User    @relation(fields: [userId], references: [id])
+  user   User?   @relation(fields: [userId], references: [id], onDelete: SetNull)
 }
 
 model HouseInfo {
@@ -154,7 +154,7 @@ model HouseInfo {
   houseId Int
   key     String
   value   String
-  house   House  @relation(fields: [houseId], references: [id])
+  house   House  @relation(fields: [houseId], references: [id], onDelete: Cascade)
 }
 
 model HouseCredential {
@@ -169,7 +169,7 @@ model HouseCredential {
   notes     String?
   createdAt DateTime       @default(now())
 
-  house     House          @relation(fields: [houseId], references: [id])
+  house     House          @relation(fields: [houseId], references: [id], onDelete: Cascade)
 }
 
 model Alert {
@@ -180,15 +180,15 @@ model Alert {
   createdAt   DateTime  @default(now())
   expiresAt   DateTime?
   isResolved  Boolean   @default(false)
-  createdById String
+  createdById String?
   houseId     Int
-  createdBy   User      @relation(fields: [createdById], references: [id])
-  house       House     @relation(fields: [houseId], references: [id])
+  createdBy   User?     @relation(fields: [createdById], references: [id], onDelete: SetNull)
+  house       House     @relation(fields: [houseId], references: [id], onDelete: Cascade)
 }
 
 model Activity {
   id        Int            @id @default(autoincrement())
-  houseId   Int
+  houseId   Int?
   userId    String?
   type      ActivityType
   entity    ActivityEntity
@@ -197,8 +197,8 @@ model Activity {
   message   String
   createdAt DateTime       @default(now())
 
-  house House @relation(fields: [houseId], references: [id])
-  user  User? @relation(fields: [userId], references: [id])
+  house House? @relation(fields: [houseId], references: [id], onDelete: SetNull)
+  user  User?  @relation(fields: [userId], references: [id], onDelete: SetNull)
 
   @@index([houseId, createdAt])
 }

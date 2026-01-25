@@ -307,3 +307,67 @@ export async function getDemoHouse() {
   });
   return house;
 }
+
+// leave house
+export async function leaveHouse() {
+  // authorization check
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  if (!session?.user?.id) {
+    throw new Error("Not authenticated");
+  }
+
+  const user = await prisma.user.findUnique({
+    where: { id: session.user.id },
+  });
+
+  if (!user?.houseId) {
+    throw new Error("Not authorized in this house");
+  }
+
+  // remove user from house
+  const updatedUser = await prisma.user.update({
+    where: { id: session.user.id },
+    data: {
+      houseId: null,
+    },
+  });
+
+  await logActivity({
+    houseId: user.houseId,
+    userId: session.user.id,
+    type: "UPDATE",
+    entity: "HOUSE",
+    entityId: user.houseId,
+    title: `${updatedUser.name} left the house`,
+    message: `${updatedUser.name} left the house`,
+  });
+
+  return updatedUser;
+}
+
+// delete house
+export async function deleteHouse() {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  if (session == null || !session.user.houseId) {
+    return;
+  }
+
+  // first delete all activities, bills, tasks associated with the house
+  await prisma.activity.deleteMany({
+    where: { houseId: session.user.houseId },
+  });
+  await prisma.bill.deleteMany({ where: { houseId: session.user.houseId } });
+  await prisma.task.deleteMany({ where: { houseId: session.user.houseId } });
+
+  const house = await prisma.house.delete({
+    where: { id: session.user.houseId },
+  });
+
+  return house;
+}
