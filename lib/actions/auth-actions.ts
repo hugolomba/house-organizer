@@ -33,6 +33,8 @@ export const signOut = async () => {
     headers: await headers(),
   });
 
+  redirect("/");
+
   return result;
 };
 

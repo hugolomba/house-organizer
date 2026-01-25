@@ -49,7 +49,7 @@ type BillCardProps = {
 export default function BillCard({ bill }: BillCardProps) {
   const [isPending, startTransition] = useTransition();
   const [selectedBill, setSelectedBill] = useState<HouseBills[number] | null>(
-    null
+    null,
   );
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [pendingAction, setPendingAction] = useState<
@@ -107,7 +107,7 @@ export default function BillCard({ bill }: BillCardProps) {
           shares: prev.shares.map((share) =>
             share.userId === prev.responsibleId
               ? { ...share, paid: true }
-              : share
+              : share,
           ),
         };
       });
@@ -138,7 +138,7 @@ export default function BillCard({ bill }: BillCardProps) {
   };
 
   const userShare = selectedBill?.shares.find(
-    (share) => share.userId === selectedBill.responsibleId
+    (share) => share.userId === selectedBill.responsibleId,
   );
 
   const hasUnpaidShares = bill.shares.some((share) => !share.paid);
@@ -154,6 +154,7 @@ export default function BillCard({ bill }: BillCardProps) {
           setSelectedBill(bill);
           setIsModalOpen(true);
         }}
+        className="bg-gray-50/90"
       >
         <CardHeader className="flex justify-between px-2 py-1">
           <div className="flex flex-row items-center justify-center gap-2">

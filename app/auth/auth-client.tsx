@@ -67,7 +67,7 @@ export default function AuthClientPage() {
       setError(
         `Authentication error: ${
           err instanceof Error ? err.message : "Unknown error"
-        }`
+        }`,
       );
     } finally {
       setIsLoading(false);
@@ -313,7 +313,7 @@ export default function AuthClientPage() {
             <Button
               type="submit"
               disabled={isLoading}
-              // className="w-full bg-linear-to-r from-pink-500 to-yellow-500 dark:from-blue-600 dark:to-purple-600 text-white rounded-3xl shadow hover:scale-105 transition"
+              className="bg-blue-500 hover:bg-blue-600 px-6 py-3 rounded-full text-white font-semibold"
             >
               {isLoading ? (
                 <div className="flex items-center">

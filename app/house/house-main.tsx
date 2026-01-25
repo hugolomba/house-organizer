@@ -63,8 +63,19 @@ export default function HouseMain({ house }: HouseProps) {
   const [openModal, setOpenModal] = useState<ModalType>(null);
   const [copied, setCopied] = useState(false);
 
-  console.log(" users modal open:", openModal === "users");
+  const upcomingBills = house.bills.filter((bill) => {
+    const dueDate = new Date(bill.dueDate);
+    const now = new Date();
 
+    const sevenDaysFromNow = new Date();
+    sevenDaysFromNow.setDate(now.getDate() + 7);
+
+    return (
+      dueDate >= now &&
+      dueDate <= sevenDaysFromNow &&
+      !bill.shares.every((share) => share.paid)
+    );
+  });
   const activeAlerts = house.alerts.filter((alert) => !alert.isResolved);
   const activeTasks = house.tasks.filter((task) => !task.status);
 
@@ -109,7 +120,7 @@ export default function HouseMain({ house }: HouseProps) {
         className="
     rounded-4xl
     bg-gradient-to-br from-blue-500 to-blue-600
-    dark:from-blue-700 dark:to-blue-800
+    dark:from-gray-700 dark:to-gray-800
     text-white
    
     shadow-
@@ -219,12 +230,15 @@ export default function HouseMain({ house }: HouseProps) {
           <AccordionItem
             key="1"
             aria-label="Alerts"
-            title={
-              <p className="text-foreground/90 font-bold">
-                Alerts ({activeAlerts.length})
-              </p>
+            title={<p className="text-foreground/90 font-bold">Alerts</p>}
+            indicator={
+              <div className="flex flex-row items-center gap-2">
+                <span className="font-bold text-lg">
+                  ({activeAlerts.length})
+                </span>{" "}
+                <TriangleAlert color="#ff0000" />
+              </div>
             }
-            indicator={<TriangleAlert color="#ff0000" />}
           >
             <Alerts houseAlerts={house.alerts} />
           </AccordionItem>
@@ -232,11 +246,16 @@ export default function HouseMain({ house }: HouseProps) {
             key="2"
             aria-label="Upcoming bills"
             title={
-              <p className="text-foreground/90 font-bold">
-                Upcoming Bills ({house.bills.length})
-              </p>
+              <p className="text-foreground/90 font-bold">Upcoming Bills</p>
             }
-            indicator={<ReceiptEuro color="green" />}
+            indicator={
+              <div className="flex flex-row items-center gap-2">
+                <span className="font-bold text-lg">
+                  ({upcomingBills.length})
+                </span>{" "}
+                <ReceiptEuro color="green" />
+              </div>
+            }
           >
             <Bills houseBills={house.bills} />
           </AccordionItem>
@@ -245,13 +264,14 @@ export default function HouseMain({ house }: HouseProps) {
             key="3"
             aria-label="Upcoming Tasks"
             title={
-              <p className="text-foreground/90 font-bold">
-                Upcoming Tasks ({activeTasks.length})
-              </p>
+              <p className="text-foreground/90 font-bold">Upcoming Tasks</p>
             }
             indicator={
-              <div className="flex flex-row items-center gap-1">
-                ({activeTasks.length}) <ClipboardList color="#008ee6" />
+              <div className="flex flex-row items-center gap-2">
+                <span className="font-bold text-lg">
+                  ({activeTasks.length})
+                </span>{" "}
+                <ClipboardList color="#008ee6" />
               </div>
             }
           >

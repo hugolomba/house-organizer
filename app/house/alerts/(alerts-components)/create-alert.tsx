@@ -26,6 +26,7 @@ export default function CreateAlert({
   const [submitted, setSubmitted] = useState<boolean>(false);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<boolean>(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -33,11 +34,14 @@ export default function CreateAlert({
 
     const formData = new FormData(e.target as HTMLFormElement);
     try {
+      setError(null);
       await createAlert(formData);
+      setSuccess(true);
+      setSubmitted(true);
     } catch (error) {
       setError(error instanceof Error ? error.message : String(error));
+      setSuccess(false);
     } finally {
-      setSubmitted(true);
       setIsSubmitting(false);
     }
   };
@@ -50,9 +54,13 @@ export default function CreateAlert({
     >
       <ModalContent className="p-4">
         <ModalHeader>
-          {!submitted ? "Create Alert" : "Alert Created Successfully"}
+          {!submitted
+            ? "Create Alert"
+            : success
+              ? "Alert Created Successfully"
+              : "Error Creating Alert"}
         </ModalHeader>
-        {!submitted ? (
+        {!submitted || !success ? (
           <Form className="flex flex-col gap-4" onSubmit={handleSubmit}>
             <Input
               isRequired
@@ -82,7 +90,13 @@ export default function CreateAlert({
 
             <DatePicker name="expiresAt" label="Expiring Date" />
 
-            <Button type="submit" variant="bordered" isLoading={isSubmitting}>
+            {error && <div className="text-small text-red-500">{error}</div>}
+
+            <Button
+              type="submit"
+              className="rounded-full bg-blue-600 dark:bg-gray-800 text-white hover:bg-gray-100 dark:hover:bg-gray-700/70"
+              isLoading={isSubmitting}
+            >
               {isSubmitting ? "Submitting..." : "Create Alert"}
             </Button>
             {submitted && (
@@ -94,18 +108,22 @@ export default function CreateAlert({
         ) : (
           <ModalFooter className="mt-4 flex gap-2">
             <Button
-              variant="flat"
+              className="rounded-full bg-blue-600 dark:bg-gray-800 text-white hover:bg-gray-100 dark:hover:bg-gray-700/70"
               onPress={() => {
                 setSubmitted(false);
+                setSuccess(false);
+                setError(null);
                 setCreateAlertIsOpen(false);
               }}
             >
               Close
             </Button>
             <Button
-              variant="flat"
+              className="rounded-full bg-blue-600 dark:bg-gray-800 text-white hover:bg-gray-100 dark:hover:bg-gray-700/70"
               onPress={() => {
                 setSubmitted(false);
+                setSuccess(false);
+                setError(null);
               }}
             >
               Create Another Alert

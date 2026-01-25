@@ -109,7 +109,12 @@ export default function SetupHouse() {
               size="lg"
               onValueChange={setInviteCode}
             />
-            <Button type="submit" className="mt-4" size="lg" variant="solid">
+            <Button
+              type="submit"
+              size="lg"
+              variant="solid"
+              className="bg-blue-500 hover:bg-blue-600 px-6 py-3 rounded-full text-white font-semibold mt-4"
+            >
               Validate Invite Code{" "}
             </Button>
           </Form>
@@ -126,14 +131,14 @@ export default function SetupHouse() {
                   (
                     user: Prisma.UserGetPayload<{
                       include: { house: true } | null;
-                    }>
+                    }>,
                   ) => (
                     <Avatar
                       src={user.image || ""}
                       name={user.name || "User"}
                       key={user.id}
                     />
-                  )
+                  ),
                 )}
               </AvatarGroup>
             </CardBody>

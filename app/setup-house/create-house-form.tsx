@@ -102,14 +102,19 @@ export default function CreateHouseForm() {
               <Button
                 isLoading
                 type="submit"
-                className="mt-4"
                 size="lg"
                 variant="solid"
+                className="bg-blue-500 hover:bg-blue-600 px-6 py-3 rounded-full text-white font-semibold mt-4"
               >
                 Creating House
               </Button>
             ) : (
-              <Button type="submit" className="mt-4" size="lg" variant="solid">
+              <Button
+                type="submit"
+                size="lg"
+                variant="solid"
+                className="bg-blue-500 hover:bg-blue-600 px-6 py-3 rounded-full text-white font-semibold mt-4"
+              >
                 Create House
               </Button>
             )}
@@ -144,6 +149,7 @@ export default function CreateHouseForm() {
                 </div>
                 <Button
                   size="sm"
+                  className="bg-blue-500 hover:bg-blue-600 px-6 py-3 rounded-full text-white font-semibold"
                   variant="solid"
                   onPress={handleCopyInvite}
                   startContent={copied ? <CopyCheck /> : <Copy />}
@@ -153,7 +159,13 @@ export default function CreateHouseForm() {
               </div>
             </ModalBody>
             <ModalFooter className="justify-center">
-              <Button as={Link} href="/house" variant="solid" size="lg">
+              <Button
+                as={Link}
+                href="/house"
+                variant="solid"
+                size="lg"
+                className="bg-blue-500 hover:bg-blue-600 px-6 py-3 rounded-full text-white font-semibold"
+              >
                 Go to my House
               </Button>
             </ModalFooter>

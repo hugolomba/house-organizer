@@ -13,7 +13,7 @@ export default function SetupHouse() {
     <div className="flex flex-col items-center justify-center min-h-screen relative w-full">
       {mode && (
         <Button
-          className="absolute top-4 left-4"
+          className="absolute top-4 left-4 bg-blue-500 hover:bg-blue-600 px-6 py-3 rounded-full text-white font-semibold"
           href="/"
           startContent={<ArrowBigLeft />}
           onPress={() => setMode(null)}
@@ -34,6 +34,7 @@ export default function SetupHouse() {
               onPress={() => setMode("create")}
               size="lg"
               startContent={<HousePlus />}
+              className="bg-blue-500 hover:bg-blue-600 px-6 py-3 rounded-full text-white font-semibold"
             >
               Create House
             </Button>
@@ -41,7 +42,7 @@ export default function SetupHouse() {
               onPress={() => setMode("join")}
               size="lg"
               startContent={<CirclePlus />}
-              className=""
+              className="bg-blue-500 hover:bg-blue-600 px-6 py-3 rounded-full text-white font-semibold"
             >
               Join a house
             </Button>
