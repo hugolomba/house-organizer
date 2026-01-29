@@ -30,14 +30,6 @@ export async function createRoom(
     | "EXTERNAL"
     | "OTHER";
 
-  console.log("Creating room with data:", {
-    name,
-    roomType,
-    isCommon,
-    houseId,
-    userIds,
-  });
-
   const newRoom = await prisma.room.create({
     data: {
       name,

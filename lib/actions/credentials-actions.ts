@@ -3,10 +3,8 @@
 import { prisma } from "@/lib/prisma";
 import { auth } from "../auth";
 import { headers } from "next/dist/server/request/headers";
-import { House, Prisma } from "@/prisma/generated/client";
-import { log } from "console";
+
 import { logActivity } from "../activity";
-import { Form } from "lucide-react";
 import { revalidatePath } from "next/cache";
 import { encrypt, decrypt } from "../security/credentials-crypto";
 

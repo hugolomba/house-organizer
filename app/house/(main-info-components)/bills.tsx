@@ -33,16 +33,18 @@ export default function Bills({ houseBills }: { houseBills: HouseBills }) {
   });
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-6 items-center">
       <p className="text-sm">
         You are seeing the upcoming bills within the next {UPCOMING_DAYS} days.
       </p>
       {upcomingBills.length === 0 && (
         <p className="text-md text-default-500">No upcoming bills.</p>
       )}
-      {upcomingBills.map((bill) => (
-        <BillCard key={bill.id} bill={bill} />
-      ))}
+      <div className="flex flex-col gap-4 md:flex-row md:flex-wrap md:gap-4 md:justify-center items-center">
+        {upcomingBills.map((bill) => (
+          <BillCard key={bill.id} bill={bill} />
+        ))}
+      </div>
 
       <MainButton href="/house/bills">View All Bills</MainButton>
     </div>

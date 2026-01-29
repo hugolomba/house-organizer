@@ -24,9 +24,5 @@ export default async function Home() {
     throw new Error("User does not belong to this house");
   }
 
-  return (
-    <div className="container flex flex-col items-center mx-auto">
-      <HouseMain house={house} />
-    </div>
-  );
+  return <HouseMain house={house} />;
 }

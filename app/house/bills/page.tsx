@@ -15,8 +15,6 @@ export default async function BillsPage() {
 
   const house = await getHouseById(session.user.houseId!);
 
-  console.log("HOUSE IN BILLS PAGE:", house);
-
   return (
     <div className="w-full">
       <div className="mx-auto max-w-6xl px-4 py-6 space-y-6">

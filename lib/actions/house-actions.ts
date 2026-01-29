@@ -2,8 +2,6 @@
 import { prisma } from "@/lib/prisma";
 import { auth } from "../auth";
 import { headers } from "next/dist/server/request/headers";
-import { House, Prisma } from "@/prisma/generated/client";
-import { log } from "console";
 import { logActivity } from "../activity";
 
 // create a house
@@ -381,4 +379,23 @@ export async function deleteHouse() {
   });
 
   return house;
+}
+
+// get house activities
+export async function getHouseActivities() {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  if (session == null || !session.user.houseId) {
+    return [];
+  }
+
+  const activities = await prisma.activity.findMany({
+    where: { houseId: session.user.houseId },
+    orderBy: { createdAt: "desc" },
+    take: 20,
+  });
+
+  return activities;
 }

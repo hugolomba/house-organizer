@@ -78,10 +78,7 @@ export default function HouseRooms({ house }: HouseProps) {
 
       setDeleteModalIsOpen(false);
       setIsModalOpen(false);
-
-      console.log("Room deleted");
     } catch (error) {
-      console.error(error);
     } finally {
       setIsDeleting(false);
     }

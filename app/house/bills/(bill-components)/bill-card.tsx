@@ -154,9 +154,9 @@ export default function BillCard({ bill }: BillCardProps) {
           setSelectedBill(bill);
           setIsModalOpen(true);
         }}
-        className="bg-gray-50/90 border border-gray-300"
+        className="bg-gray-50/90 border border-gray-300 md:w-72"
       >
-        <CardHeader className="flex justify-between px-2 py-1">
+        <CardHeader className="flex justify-between px-2 py-1 gap-6">
           <div className="flex flex-row items-center justify-center gap-2">
             {/* <ReceiptEuro size={30} /> */}
 
@@ -264,7 +264,7 @@ export default function BillCard({ bill }: BillCardProps) {
               </div>
             )}
           </ModalBody>
-          <ModalFooter>
+          <ModalFooter className="flex flex-col gap-2 justify-between">
             {userShare && !userShare.paid && (
               <Button
                 isLoading={isPending && pendingAction === "mark-one"}

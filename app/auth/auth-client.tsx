@@ -3,8 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { signIn, signUp, signInSocial } from "@/lib/actions/auth-actions";
-import { Button, Input, Link, Card, CardBody, Tabs, Tab } from "@heroui/react";
-import { set } from "better-auth";
+import { Button, Input } from "@heroui/react";
 
 export default function AuthClientPage() {
   const [isSignIn, setIsSignIn] = useState(true);

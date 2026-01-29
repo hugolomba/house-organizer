@@ -69,7 +69,6 @@ export default function AlertCard({ alert }: { alert: HouseAlerts[number] }) {
         return next;
       });
     } catch (error) {
-      console.error("Failed to resolve alert:", error);
     } finally {
       setResolvingAlertId(null);
       router.refresh();
@@ -112,9 +111,8 @@ export default function AlertCard({ alert }: { alert: HouseAlerts[number] }) {
       color={defineAlertColor(alert.id, alert.priority)}
       variant={defineAlertVariant(alert.priority)}
       classNames={{
-        base: "flex flex-col gap-2 p-2",
-        title:
-          "break-words line-clamp-4 break-all overflow-hidden font-bold text-lg text-center",
+        base: "flex flex-col gap-2 p-2 md:w-1/8",
+        title: "overflow-hidden font-bold text-lg text-center",
         description: "text-center",
       }}
       endContent={

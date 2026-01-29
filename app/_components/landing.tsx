@@ -14,23 +14,13 @@ export default function LandingClient() {
       {/* HERO */}
       <section className="w-full bg-white dark:bg-black">
         <div className="max-w-7xl mx-auto px-4 py-24">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+          <div className="gap-12 items-center flex flex-col md:flex-row">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
               className="text-center md:text-left"
             >
-              <div className="flex flex-row items-center gap-2">
-                {/* <Image
-                  src="/images/logo2.png"
-                  alt="Illustration of people managing a shared household"
-                  width={200}
-                  height={200}
-                  className="mx-auto md:mx-0 mb-6 w-24 h-auto"
-                /> */}
-              </div>
-
               <h1 className="text-5xl md:text-5xl font-bold mb-6">
                 <span className="bg-gradient-to-r from-blue-500 to-green-500 bg-clip-text text-transparent text-6xl">
                   HouseMates
@@ -52,7 +42,7 @@ export default function LandingClient() {
 
             <div className="relative w-full h-[320px] md:h-[420px]">
               <Image
-                src="/images/mockup.png"
+                src="/images/screenshot.png"
                 alt="HouseMates app preview"
                 fill
                 className="object-contain"
@@ -145,15 +135,6 @@ export default function LandingClient() {
                 Set up a new house in seconds or join an existing one using an
                 invite link.
               </p>
-
-              {/* <div className="relative w-full h-[160px]">
-                <Image
-                  src="/images/22.png"
-                  alt="Create or join a house"
-                  fill
-                  className="object-contain"
-                />
-              </div> */}
             </motion.div>
 
             {/* STEP 2 */}
@@ -168,8 +149,6 @@ export default function LandingClient() {
                 2
               </div>
 
-              {/* <Bell className="w-10 h-10 text-blue-500 mb-6 mt-4" /> */}
-
               <h3 className="text-xl font-semibold mb-3">
                 Add everything you share
               </h3>
@@ -177,15 +156,6 @@ export default function LandingClient() {
                 Register bills, chores, alerts, rooms, and shared credentials in
                 one central place.
               </p>
-
-              {/* <div className="relative w-full h-[160px]">
-                <Image
-                  src="/images/how-add-info.png"
-                  alt="Add bills, tasks and alerts"
-                  fill
-                  className="object-contain"
-                />
-              </div> */}
             </motion.div>
 
             {/* STEP 3 */}
@@ -200,8 +170,6 @@ export default function LandingClient() {
                 3
               </div>
 
-              {/* <CheckSquare className="w-10 h-10 text-blue-500 mb-6 mt-4" /> */}
-
               <h3 className="text-xl font-semibold mb-3">
                 Stay organised together
               </h3>
@@ -209,15 +177,6 @@ export default function LandingClient() {
                 Everyone knows what to pay, what to do, and what needs
                 attention.
               </p>
-              {/* 
-              <div className="relative w-full h-[160px]">
-                <Image
-                  src="/images/how-stay-organised.png"
-                  alt="Stay organised with housemates"
-                  fill
-                  className="object-contain"
-                />
-              </div> */}
             </motion.div>
           </div>
         </div>
@@ -238,7 +197,7 @@ export default function LandingClient() {
       </section>
 
       {/* DEMO VIDEO */}
-      <section className="w-full bg-gray-50 dark:bg-neutral-900">
+      {/* <section className="w-full bg-gray-50 dark:bg-neutral-900">
         <div className="max-w-7xl mx-auto px-4 py-20">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
@@ -262,7 +221,7 @@ export default function LandingClient() {
             </video>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* TESTIMONIALS */}
       <section className="w-full bg-gray-50 dark:bg-neutral-900">

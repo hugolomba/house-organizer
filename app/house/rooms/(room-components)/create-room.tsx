@@ -76,8 +76,6 @@ export default function CreateRoom({
   const [isCommon, setIsCommon] = useState<boolean>(false);
   const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
 
-  console.log("selectedUsers:", selectedUsers);
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);

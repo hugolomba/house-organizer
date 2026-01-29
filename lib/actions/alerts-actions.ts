@@ -1,6 +1,5 @@
 "use server";
 import { prisma } from "@/lib/prisma";
-import { log } from "console";
 import { revalidatePath } from "next/cache";
 import { logActivity } from "../activity";
 import { headers } from "next/dist/server/request/headers";

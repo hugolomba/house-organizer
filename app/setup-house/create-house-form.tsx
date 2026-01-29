@@ -55,9 +55,7 @@ export default function CreateHouseForm() {
         setCopied(true);
         setTimeout(() => setCopied(false), 5000);
       })
-      .catch((err) => {
-        console.error("Failed to copy invite link:", err);
-      });
+      .catch((err) => {});
   };
 
   return (

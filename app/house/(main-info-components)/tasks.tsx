@@ -50,7 +50,7 @@ export default function Tasks({ houseTasks }: TasksProps) {
   };
 
   return (
-    <div className="w-full flex flex-col gap-6">
+    <div className="w-full flex flex-col gap-6 items-center">
       {houseTasks.map((task) =>
         !task.status ? (
           <Checkbox

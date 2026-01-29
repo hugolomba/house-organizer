@@ -113,7 +113,7 @@ export default function HouseMain({ house }: HouseProps) {
   };
 
   return (
-    <div className="container flex flex-col gap-4 p-2">
+    <div className="w-full flex flex-col gap-4 p-4 lg:p-0 col-span-3">
       <Card
         fullWidth
         className="rounded-4xl dark:from-gray-700 dark:to-gray-800 text-white shadow-ring-1 ring-white/10 bg-linear-to-tr from-blue-400 to-green-400 "
@@ -454,5 +454,6 @@ export default function HouseMain({ house }: HouseProps) {
         </ModalContent>
       </Modal>
     </div>
+    // </div>
   );
 }

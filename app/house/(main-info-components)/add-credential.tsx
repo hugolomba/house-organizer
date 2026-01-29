@@ -22,7 +22,6 @@ export default function AddCredential({
 
     try {
       const newCredential = await createCredential(formData, houseId);
-      console.log("Created credential:", newCredential);
       setIsCreated(true);
     } catch (error) {
       if (error instanceof Error) {

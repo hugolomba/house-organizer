@@ -49,14 +49,10 @@ export default function App({ session }: { session: Session | null }) {
             height={40}
             className="hover:scale-105 transition"
           />
-          {/* <p className="font-bold text-2xl hover:scale-105 transition bg-clip-text text-transparent"> */}
-          {/* <span className="bg-gradient-to-r from-blue-500 to-blue-500 bg-clip-text text-transparent">
-            House
-          </span> */}
+
           <span className="font-bold text-2xl bg-gradient-to-r from-blue-500 to-green-500 bg-clip-text text-transparent">
             HouseMates
           </span>
-          {/* </p> */}
         </Link>
       </NavbarBrand>
 
@@ -92,13 +88,11 @@ export default function App({ session }: { session: Session | null }) {
         </NavbarItem>
 
         {session ? (
-          // <NavbarItem>
           <NavbarMenuToggle
             aria-label={isMenuOpen ? "Close menu" : "Open menu"}
             className="sm:hidden"
           />
         ) : (
-          // </NavbarItem>
           <NavbarItem>
             <div className="flex items-center gap-3">
               <MainButton href="/auth">Sign Up / Login</MainButton>
@@ -178,18 +172,12 @@ export function NavbarWithSession({ session }: { session: Session }) {
         </DropdownTrigger>
         <DropdownMenu aria-label="Profile Actions" variant="flat">
           <DropdownItem key="signed-in-as" className="h-14 gap-2">
-            <p className="font-semibold">Signed in as</p>
-            <p className="font-semibold">{session.user?.name || ""}</p>
-          </DropdownItem>
-          <DropdownItem key="my-profile">
-            <Link href={`/user/${session.user?.id}`}>My Profile</Link>
-          </DropdownItem>
-          <DropdownItem key="settings">
-            <Link href="/settings">Settings</Link>
+            <p className="font-semibold">
+              Signed in as {session.user?.name || ""}
+            </p>
           </DropdownItem>
 
           <DropdownItem key="logout" color="danger" onPress={() => signOut()}>
-            <Divider />
             Log Out
           </DropdownItem>
         </DropdownMenu>

@@ -32,7 +32,6 @@ type HouseProps = {
 };
 
 export default function Bills({ house }: HouseProps) {
-  console.log("HOUSE BILLS:", house.bills);
   const [addBillIsOpen, setAddBillIsOpen] = useState(false);
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
   const [filter, setFilter] = useState<
@@ -75,7 +74,7 @@ export default function Bills({ house }: HouseProps) {
       return (
         bill.title.toLowerCase().includes(search.toLowerCase()) ||
         bill.description?.toLowerCase().includes(search.toLowerCase()) ||
-        bill.responsible.name.toLowerCase().includes(search.toLowerCase()) ||
+        bill.responsible?.name.toLowerCase().includes(search.toLowerCase()) ||
         bill.totalValue.toString().includes(search)
       );
     });
