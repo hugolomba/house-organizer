@@ -7,6 +7,7 @@ import Navbar from "@/app/_components/navbar";
 import Footer from "@/app/_components/footer";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
+import { Analytics } from "@vercel/analytics/next";
 
 const sfPro = localFont({
   src: [{ path: "../public/fonts/SF-Pro.ttf" }],
@@ -47,7 +48,9 @@ export default async function RootLayout({
           <div className="min-h-screen flex flex-col">
             <Navbar session={session} />
 
-            <main className="flex-1">{children}</main>
+            <main className="flex-1">
+              {children} <Analytics />
+            </main>
 
             <Footer />
           </div>
