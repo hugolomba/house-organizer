@@ -14,26 +14,6 @@ export default function AuthClientPage() {
   const [error, setError] = useState<string>("");
   const router = useRouter();
 
-  // Get callback URL from search params (set by middleware)
-
-  // const handleSocialAuth = async (provider: "google" | "github") => {
-  //   setIsLoading(true);
-  //   setError("");
-  //   try {
-  //     await signInSocial(provider);
-  //   } catch (err) {
-  //     console.error("Social auth error:", err);
-  //     setError(err.message);
-  //     // setError(
-  //     //   `Error authenticating with ${provider}: ${
-  //     //     err instanceof Error ? err.message : "Unknown error"
-  //     //   }`
-  //     //   setError(err.message)
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
-
   const handleSocialAuth = async (provider: "google" | "github") => {
     setIsLoading(true);
     await signInSocial(provider);
